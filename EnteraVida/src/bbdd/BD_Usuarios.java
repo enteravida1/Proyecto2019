@@ -1,5 +1,6 @@
 /*
  * BD_Usuarios: Operaciones de añadir,buscar y eliminar usuarios de la base de datos.
+ * Programado por raul
  */
 
 package bbdd;
