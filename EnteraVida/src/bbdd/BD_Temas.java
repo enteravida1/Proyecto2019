@@ -16,7 +16,7 @@ import modelos.Usuarios;
 		public BD_Temas(){
 			super();
 		}
-		
+
 		
 		public int CrearTema(Temas t) throws TecnicException{
 			String cadenaSQL="INSERT INTO temas (FECHA,TITULO_FORO, TITULO_TEMA, AUTOR,DESCRIPCION) VALUES('" + t.getFecha() + "','" +
