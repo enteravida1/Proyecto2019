@@ -1,7 +1,17 @@
+/*
+ * @author Raul_Alonso_Ollero
+ * BD_Comentarios: Operaciones de añadir,buscar y eliminar comentarios a un tema de la base de datos.
+ */
+
+
 package bbdd;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+
+import exceptions.TecnicException;
+import modelos.Comentarios;
 
 public class BD_Comentarios extends BD_Conector {
 	
@@ -13,9 +23,18 @@ public class BD_Comentarios extends BD_Conector {
 		super();
 	}
 	
-	public int CrearComentario(Comentarios c) throws TecnicException{
-		String cadenaSQL="INSERT INTO comentarios (TITULO_TEMA,TITULO_FORO,ORDEN,USER,FECHA,CONTENIDO,NUM_LIKES) VALUES('" + c.getTituloTema() + "','" +
-				c.getTituloForo()+ "','" +c.getOrden()+  "','" + c.getUser() + "','" + c.getFecha()+ "','" + c.getContenido()+ "','"+u.getNlikes()+"')"; 
+	/**
+	 * Metodo que crea un comentario, que lo puede realizar tanto un administrador,
+	 * como un usuario normal.
+	 * 
+	 * @param Comentarios ca : Es el objeto a construir en la clase Comentarios
+	 * @throws TecnicException : si no funciona por alguna razon que no tenga que ver con la base de datos.
+	 * @return filas: el número de filas que se han insertado.
+	 */
+	
+	public int CrearComentario(Comentarios ca) throws TecnicException{
+		String cadenaSQL="INSERT INTO comentarios (TITULO_TEMA,TITULO_FORO,ORDEN,USER,FECHA,CONTENIDO,NUM_LIKES) VALUES('" + ca.getTituloTema() + "','" +
+				ca.getTituloForo()+ "','" +ca.getOrden()+  "','" + ca.getUser() + "','" + ca.getFecha()+ "','" + ca.getContenido()+ "','"+ca.getNlikes()+"')"; 
 		try{
 			this.abrir();
 			s=c.createStatement();
@@ -30,19 +49,27 @@ public class BD_Comentarios extends BD_Conector {
 		
 	}
 	
+	/**
+	 * Metodo que busca un comentario por el orden en el que se ha escrito,
+	 * ya que el orden no puede repetirse y es unico en cada tema.
+	 * 
+	 * @param orden : es el orden que ocupa el comentario en el tema
+	 * @throws TecnicException : si no funciona por alguna razon que no tenga que ver con la base de datos.
+	 * @return ca : el objeto construido que se ha formado al buscar el comentario
+	 */
 	public  Comentarios BuscarComentarios(int orden) throws TecnicException{
 		String cadenaSQL="SELECT * from comentarios WHERE ORDEN =' "+orden+"'" ;
-		Comentarios c=null;
+		Comentarios ca=null;
 		try{
 			this.abrir();
 			s=c.createStatement();
 			reg=s.executeQuery(cadenaSQL);
 			if ( reg.next()){
-				c=new Comentarios(reg.getString(1),reg.getString(2),orden,reg.getString(4),reg.getString(5),reg.getString(6),reg.getString(7));
+				ca=new Comentarios(reg.getString(1),reg.getString(2),orden,reg.getString(4),reg.getString(5),reg.getString(6),reg.getInt(7));
 			}			
 			s.close();
 			this.cerrar();
-			return c;
+			return ca;
 		}
 		catch ( SQLException e){
 		//	System.out.println(e.getMessage());
@@ -51,8 +78,16 @@ public class BD_Comentarios extends BD_Conector {
 		}
 	}
 	
-	public int  EliminarComentario(Comentarios c)  throws TecnicException{
-		String cadenaSQL=" DELETE  from usuarios WHERE ORDEN ='" +c.getOrden+"'";
+	/**
+	 * Metodo que elimina un comentario pasandole un objeto comentario entero
+	 * 
+	 * @param  Comentarios ca : Es el objeto a construir en la clase Comentarios
+	 * @throws TecnicException : si no funciona por alguna razon que no tenga que ver con la base de datos.
+	 * @return filas: el número de filas que se han eliminado.
+	 */
+	
+	public int  EliminarComentario(Comentarios ca)  throws TecnicException{
+		String cadenaSQL=" DELETE  from usuarios WHERE ORDEN ='" +ca.getOrden()+"'";
 		try{
 			this.abrir();
 			s=c.createStatement();
@@ -68,6 +103,8 @@ public class BD_Comentarios extends BD_Conector {
 			}
 		
 	}
+	
+	
 	
 	
 

@@ -1,5 +1,7 @@
 package modelos;
 
+import java.sql.Statement;
+
 public class Comentarios {
 	
 	private String tituloTema;
@@ -107,6 +109,9 @@ public class Comentarios {
 	public void setNlikes(int nlikes) {
 		this.nlikes = nlikes;
 	}
+
+
+
 	
 	
 	
