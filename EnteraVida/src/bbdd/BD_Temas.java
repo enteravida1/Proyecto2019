@@ -36,7 +36,7 @@ import modelos.Usuarios;
 		}
 		
 		public  Temas BuscarTemaTitF(String titulo_foro) throws TecnicException{
-			String cadenaSQL="SELECT * from noticias WHERE TITULO_AUTOR =' "+titulo_foro+ "'" ;
+			String cadenaSQL="SELECT * from noticias WHERE TITULO_FORO =' "+titulo_foro+ "'" ;
 			Temas t=null;
 			try{
 				this.abrir();

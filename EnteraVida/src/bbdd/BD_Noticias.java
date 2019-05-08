@@ -81,8 +81,8 @@ public class BD_Noticias extends BD_Conector{
 	
 	
 	public int AñadirNoticia(Noticias n) throws TecnicException{
-		String cadenaSQL="INSERT INTO noticias (TITULO, AUTOR, FECHA) VALUES('" + n.getTitulo() + "','" +
-				n.getAutor()+"','"+n.getFecha()+"')"; 
+		String cadenaSQL="INSERT INTO noticias (TITULO, AUTOR, FECHA,DESCRIPCION) VALUES('" + n.getTitulo() + "','" +
+				n.getAutor()+"','"+n.getFecha()+"','"+n.getDescripcion()+")"; 
 		try{
 			this.abrir();
 			s=c.createStatement();
