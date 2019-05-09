@@ -1,7 +1,7 @@
 /*
  * BD_Usuarios: Operaciones de añadir,buscar y eliminar usuarios de la base de datos.
+ * @author Raul_Alonso_Ollero
  */
-
 package bbdd;
 
 import java.sql.ResultSet;
@@ -21,7 +21,14 @@ public class BD_Usuarios extends BD_Conector {
 		public BD_Usuarios(){
 			super();
 		}
-		
+		/**
+		 * Metodo que crea un usuario. 
+		 * Por ahora este metodo se usará en el main para que una persona al registrarse pueda crear su usuario
+		 * 
+		 * @param Usuarios u: Es el objeto a construir en la clase Usuarios
+		 * @throws TecnicException : si no funciona por alguna razon que no tenga que ver con la base de datos.
+		 * @return filas: el número de filas que se han insertado.
+		 */
 		public int CrearUsuario(Usuarios u) throws TecnicException{
 			String cadenaSQL="INSERT INTO usuarios (USER, PASSWORD, TIPO) VALUES('" + u.getUsuario() + "','" +
 					u.getClave()+"','"+u.getTipo()+"')"; 
@@ -38,7 +45,15 @@ public class BD_Usuarios extends BD_Conector {
 				}
 			
 		}
-		
+		/**
+		 * Metodo que busca un usuario. 
+		 * Este metodo se usará principalmente para ver si un usuario está en la base de datos al logearse.
+		 * 
+		 * @param usuario : el nombre de usuario
+		 * @param clave : la contraseña del usuario
+		 * @throws TecnicException : si no funciona por alguna razon que no tenga que ver con la base de datos.
+		 * @return u : el objeto ya creado de la clase Usuarios si existe.
+		 */
 		
 		public  Usuarios BuscarUsuario(String usuario, String clave) throws TecnicException{
 			String cadenaSQL="SELECT * from usuarios WHERE USER =' "+usuario+ "' and PASSWORD =' "+clave+ "'" ;
@@ -61,6 +76,15 @@ public class BD_Usuarios extends BD_Conector {
 			}
 		}
 		
+		/**
+		 * Metodo que elimina un usuario
+		 * Este metodo elimina a un usuario, y solo lo puede utilizar el administrador
+		 * 
+		 * @param Usuarios u: el objeto entero de la clase Usuarios
+		 * @throws TecnicException : si no funciona por alguna razon que no tenga que ver con la base de datos.
+		 * @return filas : el numero de fila que se han eliminado.
+		 */
+		
 		public int  EliminarUsuario(Usuarios u)  throws TecnicException{
 			String cadenaSQL=" DELETE  from usuarios WHERE USER ='" +u.getUsuario()+"'";
 			try{
@@ -78,6 +102,15 @@ public class BD_Usuarios extends BD_Conector {
 				}
 			
 		}
+		/**
+		 * Metodo que cambia el tipo de usuario
+		 * Este metodo se usará para cambiar el tipo de usuario, que solo lo puede hacer el admin
+		 * 
+		 * @param Usuarios u : el objeto entero de la clase Usuarios
+		 * @throws TecnicException : si no funciona por alguna razon que no tenga que ver con la base de datos.
+		 * @return filas : el numero de fila que se han eliminado.
+		 */
+		
 		
 		public int CambiarTipo(Usuarios u)throws TecnicException{
 			String cadenaSQL="UPDATE usuarios SET tipo='" + u.getTipo()+"' WHERE USER = '"+ u.getUsuario()+"'";
