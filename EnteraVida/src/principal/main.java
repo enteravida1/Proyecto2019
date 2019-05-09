@@ -32,10 +32,11 @@ public class main {
 		do {
 			System.out.println("\n\nBienvenido a EnteraVida");
 			System.out.println("***************");
-			System.out.println("1.Registrarte\n 2.Iniciar Sesión\n 3.Salir");
+			System.out.println(" 1.Registrarte\n 2.Iniciar Sesión\n 3.Salir");
 			opc = sLeer.nextInt();
 			switch (opc) {
 			case 1:
+				sLeer.nextLine();
 				System.out.println("Introduce tu nombre de usuario");
 				String user = sLeer.nextLine();
 
@@ -66,6 +67,7 @@ public class main {
 					}
 				}
 			case 2:
+				sLeer.nextLine();
 				System.out.println("Introduce tu usuario");
 				 user=sLeer.nextLine();
 				
@@ -74,6 +76,9 @@ public class main {
 				
 				// System.out.println(bdu.BuscarUsuario(user, pass).toString());
 				Usuarios u=bdu.BuscarUsuario(user, pass);
+				if (u==null) {
+					System.out.println("usuario o contraseña incorrectas");
+				}
 				System.out.println(u.toString());
 				break;
 

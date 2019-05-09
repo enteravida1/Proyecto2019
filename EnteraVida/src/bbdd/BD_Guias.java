@@ -3,6 +3,8 @@ package bbdd;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import exceptions.TecnicException;
 import modelos.Guias;
 import modelos.Temas;
 

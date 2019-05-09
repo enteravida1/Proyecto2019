@@ -30,8 +30,8 @@ public class BD_Usuarios extends BD_Conector {
 		 * @return filas: el número de filas que se han insertado.
 		 */
 		public int CrearUsuario(Usuarios u) throws TecnicException{
-			String cadenaSQL="INSERT INTO usuarios (USER, PASSWORD, TIPO) VALUES('" + u.getUsuario() + "','" +
-					u.getClave()+"','"+u.getTipo()+"')"; 
+			String cadenaSQL="INSERT INTO usuarios (USER,PASSWORD,TIPO,ESTADO) VALUES('" + u.getUsuario() + "','" +
+					u.getClave()+"','"+u.getTipo()+"','"+null+"')"; 
 			try{
 				this.abrir();
 				s=c.createStatement();
@@ -56,7 +56,7 @@ public class BD_Usuarios extends BD_Conector {
 		 */
 		
 		public  Usuarios BuscarUsuario(String usuario, String clave) throws TecnicException{
-			String cadenaSQL="SELECT * from usuarios WHERE USER =' "+usuario+ "' and PASSWORD =' "+clave+ "'" ;
+			String cadenaSQL="SELECT * from usuarios WHERE USER ='"+usuario+"' and PASSWORD ='"+clave+"'" ;
 			Usuarios u=null;
 			try{
 				this.abrir();

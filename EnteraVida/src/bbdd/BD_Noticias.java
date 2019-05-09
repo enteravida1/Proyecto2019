@@ -3,6 +3,8 @@ package bbdd;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import exceptions.TecnicException;
 import modelos.Noticias;
 import modelos.Usuarios;
 
@@ -80,7 +82,7 @@ public class BD_Noticias extends BD_Conector{
 	}
 	
 	
-	public int AÃ±adirNoticia(Noticias n) throws TecnicException{
+	public int AñadirNoticia(Noticias n) throws TecnicException{
 		String cadenaSQL="INSERT INTO noticias (TITULO, AUTOR, FECHA,DESCRIPCION) VALUES('" + n.getTitulo() + "','" +
 				n.getAutor()+"','"+n.getFecha()+"','"+n.getDescripcion()+")"; 
 		try{
