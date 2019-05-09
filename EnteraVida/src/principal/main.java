@@ -100,7 +100,7 @@ public class main {
 	}
 	
 	private static void menuCliente() {
-		
+		System.out.println("Hola");
 	}
 
 }
