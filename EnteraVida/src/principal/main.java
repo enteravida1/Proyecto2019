@@ -66,6 +66,7 @@ public class main {
 
 					}
 				}
+				break;
 			case 2:
 				sLeer.nextLine();
 				System.out.println("Introduce tu usuario");
@@ -79,13 +80,27 @@ public class main {
 				if (u==null) {
 					System.out.println("usuario o contraseña incorrectas");
 				}
-				System.out.println(u.toString());
+				else {
+					System.out.println(u.toString());
+					if (u.getTipo().equals("admin"))
+						menuAdministrador();
+					else
+						menuCliente();
+				}
 				break;
 
 			}
 
 		} while (opc != 3);
 
+	}
+	
+	private static void menuAdministrador() {
+		
+	}
+	
+	private static void menuCliente() {
+		
 	}
 
 }
