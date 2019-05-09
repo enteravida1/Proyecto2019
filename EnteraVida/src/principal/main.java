@@ -73,8 +73,8 @@ public class main {
 				String pass=sLeer.nextLine();
 				
 				// System.out.println(bdu.BuscarUsuario(user, pass).toString());
-				bdu.BuscarUsuario(user, pass);
-
+				Usuarios u=bdu.BuscarUsuario(user, pass);
+				System.out.println(u.toString());
 				break;
 
 			}
