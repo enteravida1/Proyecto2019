@@ -64,6 +64,7 @@ public class BD_Comentarios extends BD_Conector {
 			this.abrir();
 			s=c.createStatement();
 			reg=s.executeQuery(cadenaSQL);
+			
 			if ( reg.next()){
 				ca=new Comentarios(reg.getString(1),reg.getString(2),orden,reg.getString(4),reg.getString(5),reg.getString(6),reg.getInt(7));
 			}			
