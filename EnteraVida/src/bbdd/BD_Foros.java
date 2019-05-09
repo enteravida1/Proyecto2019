@@ -6,6 +6,7 @@ import java.sql.Statement;
 
 import exceptions.TecnicException;
 import modelos.Foros;
+import modelos.Tipos;
 import modelos.Usuarios;
 
 public class BD_Foros extends BD_Conector {
@@ -57,5 +58,27 @@ public class BD_Foros extends BD_Conector {
 			
 		}
 	}
-
+	
+	public  Foros MostrarForos() throws TecnicException{
+		String cadenaSQL="SELECT * from foros" ;
+		Foros u=null;
+		try{
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(cadenaSQL);
+			if ( reg.next()){
+				u=new Foros(reg.getString(1),reg.getString(2),reg.getString(3),reg.getDate(4).toLocalDate(),reg.getInt(5),reg.getString(6));
+			}			
+			s.close();
+			this.cerrar();
+			return u;
+		}
+			catch ( SQLException e){
+				//	System.out.println(e.getMessage());
+					throw new TecnicException("En este momento no podemos atender su petición");
+					
+				}
+			
+			
+				
 }

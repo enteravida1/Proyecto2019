@@ -11,6 +11,7 @@ import bbdd.BD_Temas;
 import bbdd.BD_Tipos;
 import bbdd.BD_Usuarios;
 import exceptions.TecnicException;
+import modelos.Tipos;
 import modelos.Usuarios;
 
 public class main {
@@ -19,7 +20,6 @@ public class main {
 
 		Scanner sLeer = new Scanner(System.in);
 		int opc = 0;
-
 		BD_Conector.BD_Ini("enteravida");
 		BD_Usuarios bdu = new BD_Usuarios();
 		BD_Tipos bdti = new BD_Tipos();
@@ -34,6 +34,7 @@ public class main {
 			System.out.println("***************");
 			System.out.println(" 1.Registrarte\n 2.Iniciar Sesión\n 3.Salir");
 			opc = sLeer.nextInt();
+			
 			switch (opc) {
 			case 1:
 				sLeer.nextLine();
@@ -76,7 +77,7 @@ public class main {
 				String pass=sLeer.nextLine();
 				
 				// System.out.println(bdu.BuscarUsuario(user, pass).toString());
-				Usuarios u=bdu.BuscarUsuario(user, pass);
+				Usuarios u=bdu.BuscarUsuario(user,pass);
 				if (u==null) {
 					System.out.println("usuario o contraseña incorrectas");
 				}
@@ -99,8 +100,40 @@ public class main {
 		
 	}
 	
-	private static void menuCliente() {
-		System.out.println("Hola");
+	private static void menuCliente() throws TecnicException {
+		BD_Conector.BD_Ini("enteravida");
+		BD_Usuarios bdu = new BD_Usuarios();
+		BD_Tipos bdti = new BD_Tipos();
+		BD_Foros bdf = new BD_Foros();
+		BD_Temas bdte = new BD_Temas();
+		BD_Comentarios bdc = new BD_Comentarios();
+		BD_Noticias bdn = new BD_Noticias();
+		BD_Guias bdg = new BD_Guias();
+		
+		Scanner sLeer = new Scanner(System.in);
+		int usu=0;
+		System.out.println(" 1.Crear post\n 2.buscar post\n 3.Buscar noticia\n 4.Buscar guía");
+		usu = sLeer.nextInt();	
+		
+		switch (usu) {
+		case 1:
+			System.out.println(bdti.MostrarTipos());
+			
+			System.out.println("Escribe el titulo del tipo");
+			String Tipo =sLeer.nextLine();
+			Tipos t=bdti.BuscarTipos(Tipo);
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		case 4:
+			
+			break;
+
+		}
 	}
 
 }
