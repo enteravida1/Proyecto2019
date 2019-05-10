@@ -1,16 +1,18 @@
 package modelos;
 
+import java.time.LocalDate;
+
 public class Guias {
 	
 	private String titulo;
-	private String fecha;
+	private LocalDate fecha;
 	private String autor;
 	private String desarrollador;
 	private String plataforma;
 	private String descripcion;
 	private int num_likes;
 	
-	public Guias(String titulo, String fecha, String autor, String desarrollador, String plataforma, String descripcion,
+	public Guias(String titulo, LocalDate fecha, String autor, String desarrollador, String plataforma, String descripcion,
 			int num_likes) {
 		super();
 		this.titulo = titulo;
@@ -30,11 +32,13 @@ public class Guias {
 		this.titulo = titulo;
 	}
 
-	public String getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(String fecha) {
+	
+
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
