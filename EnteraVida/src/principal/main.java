@@ -1,5 +1,6 @@
 package principal;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import bbdd.BD_Comentarios;
@@ -11,6 +12,9 @@ import bbdd.BD_Temas;
 import bbdd.BD_Tipos;
 import bbdd.BD_Usuarios;
 import exceptions.TecnicException;
+import modelos.Foros;
+import modelos.Guias;
+import modelos.Noticias;
 import modelos.Usuarios;
 
 public class main {
@@ -43,7 +47,7 @@ public class main {
 				System.out.println("Introduce una contraseña");
 				String pass1 = sLeer.nextLine();
 
-				System.out.println("Introducede de nuevo la contraseña");
+				System.out.println("Introduce de nuevo la contraseña");
 				String pass2 = sLeer.nextLine();
 
 				if (!pass1.equals(pass2))
@@ -95,10 +99,10 @@ public class main {
 
 	}
 	
-	private static void menuAdministrador(String user) {
+	private static void menuAdministrador(String user) throws TecnicException {
 		Scanner sLeer = new Scanner(System.in);
 		int opc = 0;
-
+		LocalDate fechaActual= LocalDate.now();
 		BD_Conector.BD_Ini("enteravida");
 		BD_Usuarios bdu = new BD_Usuarios();
 		BD_Tipos bdti = new BD_Tipos();
@@ -115,18 +119,99 @@ public class main {
 			opc = sLeer.nextInt();
 			switch (opc) {
 			case 1:
-				System.out.println("Indica un titulo para la noticia");
-				String tituloG=sLeer.nextLine();
 				
-				System.out.println("Indica el desarrollador del titulo que vas a hablar");
+				System.out.println("Indica un titulo para la guía:\n");
+				String tituloG=sLeer.nextLine();			
+				
+				System.out.println("Indica el desarrollador del titulo que vas a hablar:\n");
 				String desarrollador=sLeer.nextLine();
 				
-				System.out.println("Indica la plataforma para la que está hecho (playStation, Xbox, Pc...)");
+				System.out.println("Indica la plataforma para la que está hecho (playStation, Xbox, Pc...):\n");
 				String plataforma=sLeer.nextLine();
 				
-				System.out.println("Escribe la guia");
+				System.out.println("Escribe la guía:\n");
 				String desc=sLeer.nextLine();
 				
+				Guias g = new Guias(tituloG, fechaActual, user, desarrollador, plataforma, desc, 0);
+				
+				int filasg = bdg.AñadirGuia(g);
+				switch (filasg) {
+				case 1:
+					System.out.println("\nGuia añadido");
+					break;
+				case 0:
+					System.out.println("\nGuia NO añadido");
+					break;
+				case -1:
+					System.out.println("\nProblemas técnicos");
+
+					break;
+
+				}
+				break;
+				
+			case 2:
+				
+				System.out.println("-------");
+				System.out.println(bdti.MostrarTipos());				
+				System.out.println("-------");
+				
+				System.out.println("Elige un tipo");
+				String eligeTipo=sLeer.nextLine();
+				
+				bdti.BuscarTpos(eligeTipo);
+				bdf.MostrarForo();
+				
+				System.out.println("Indica un titulo al foro:\n");
+				String tituloF=sLeer.nextLine();			
+				
+				System.out.println("Escribe una descripcion para el foro:\n");
+				String descF=sLeer.nextLine();
+
+				
+				Foros f = new Foros(eligeTipo, user, tituloF, fechaActual, 0, descF);
+				
+				int filasf = bdf.CrearForo(f);
+				switch (filasf) {
+				case 1:
+					System.out.println("\nForo añadido");
+					break;
+				case 0:
+					System.out.println("\nForo NO añadido");
+					break;
+				case -1:
+					System.out.println("\nProblemas técnicos");
+
+					break;
+
+				}
+				break;
+				
+			case 3:	
+				
+				System.out.println("Indica un titulo para la noticia:\n");
+				String tituloN=sLeer.nextLine();			
+				
+				System.out.println("Escribe una descripción:\n");
+				String descripcion=sLeer.nextLine();
+				
+				Noticias n = new Noticias(tituloN, user, fechaActual, descripcion, 0);
+				
+				int filasn = bdn.AñadirNoticia(n);
+				switch (filasn) {
+				case 1:
+					System.out.println("\nNoticia añadida");
+					break;
+				case 0:
+					System.out.println("\nNoticia NO añadido");
+					break;
+				case -1:
+					System.out.println("\nProblemas técnicos");
+
+					break;
+
+				}
+				break;
 				
 			}
 		}while (opc !=6);
