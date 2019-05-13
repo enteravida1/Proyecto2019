@@ -83,7 +83,7 @@ public class main {
 				else {
 					System.out.println(u.toString());
 					if (u.getTipo().equals("admin"))
-						menuAdministrador();
+						menuAdministrador(user);
 					else
 						menuCliente();
 				}
@@ -95,7 +95,42 @@ public class main {
 
 	}
 	
-	private static void menuAdministrador() {
+	private static void menuAdministrador(String user) {
+		Scanner sLeer = new Scanner(System.in);
+		int opc = 0;
+
+		BD_Conector.BD_Ini("enteravida");
+		BD_Usuarios bdu = new BD_Usuarios();
+		BD_Tipos bdti = new BD_Tipos();
+		BD_Foros bdf = new BD_Foros();
+		BD_Temas bdte = new BD_Temas();
+		BD_Comentarios bdc = new BD_Comentarios();
+		BD_Noticias bdn = new BD_Noticias();
+		BD_Guias bdg = new BD_Guias();
+	
+		do {
+			System.out.println("\n\nBienvenido ");
+			System.out.println("***************");
+			System.out.println(" 1.Crear guía\n 2.Crear foro\n 3.Crear noticia\n 4.Controlar usuarios\n 5.Buscar foro, guia, noticia");
+			opc = sLeer.nextInt();
+			switch (opc) {
+			case 1:
+				System.out.println("Indica un titulo para la noticia");
+				String tituloG=sLeer.nextLine();
+				
+				System.out.println("Indica el desarrollador del titulo que vas a hablar");
+				String desarrollador=sLeer.nextLine();
+				
+				System.out.println("Indica la plataforma para la que está hecho (playStation, Xbox, Pc...)");
+				String plataforma=sLeer.nextLine();
+				
+				System.out.println("Escribe la guia");
+				String desc=sLeer.nextLine();
+				
+				
+			}
+		}while (opc !=6);
+		
 		
 	}
 	

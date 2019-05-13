@@ -3,6 +3,7 @@ package bbdd;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 import exceptions.TecnicException;
 import modelos.Guias;
@@ -26,7 +27,7 @@ import modelos.Temas;
 				s=c.createStatement();
 				reg=s.executeQuery(cadenaSQL);
 				if ( reg.next()){
-					g=new Guias(titulo,reg.getString(2),reg.getString(3),reg.getString(4),reg.getString(5),reg.getString(6),reg.getInt(7));
+					g=new Guias(titulo,reg.getDate(2).toLocalDate(),reg.getString(3),reg.getString(4),reg.getString(5),reg.getString(6),reg.getInt(7));
 				}			
 				s.close();
 				this.cerrar();
@@ -39,7 +40,7 @@ import modelos.Temas;
 			}
 		}
 		
-		public  Guias BuscarGuiaFecha(String fecha) throws TecnicException{
+		public  Guias BuscarGuiaFecha(LocalDate fecha) throws TecnicException{
 			String cadenaSQL="SELECT * from guias WHERE FECHA =' "+fecha+ "'" ;
 			Guias g=null;
 			try{
@@ -69,7 +70,7 @@ import modelos.Temas;
 				s=c.createStatement();
 				reg=s.executeQuery(cadenaSQL);
 				if ( reg.next()){
-					g=new Guias(reg.getString(1),reg.getString(2),autor,reg.getString(4),reg.getString(5),reg.getString(6),reg.getInt(7));
+					g=new Guias(reg.getString(1),reg.getDate(2).toLocalDate(),autor,reg.getString(4),reg.getString(5),reg.getString(6),reg.getInt(7));
 				}			
 				s.close();
 				this.cerrar();
