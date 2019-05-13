@@ -82,3 +82,4 @@ public class BD_Foros extends BD_Conector {
 			
 				
 }
+}

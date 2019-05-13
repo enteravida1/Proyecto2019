@@ -50,7 +50,7 @@ public class main {
 				if (!pass1.equals(pass2))
 					System.out.println("Las contraseñas no coinciden");
 				else {
-					Usuarios u = new Usuarios(user, pass1, "user", null);
+					Usuarios u = new Usuarios(pass1, user, "user", null);
 
 					int filas = bdu.CrearUsuario(u);
 					switch (filas) {
@@ -86,7 +86,7 @@ public class main {
 					if (u.getTipo().equals("admin"))
 						menuAdministrador();
 					else
-						menuCliente();
+						menuCliente(user);
 				}
 				break;
 
@@ -100,7 +100,7 @@ public class main {
 		
 	}
 	
-	private static void menuCliente() throws TecnicException {
+	private static void menuCliente(String user) throws TecnicException {
 		BD_Conector.BD_Ini("enteravida");
 		BD_Usuarios bdu = new BD_Usuarios();
 		BD_Tipos bdti = new BD_Tipos();
@@ -122,7 +122,14 @@ public class main {
 			System.out.println("Escribe el titulo del tipo");
 			String Tipo =sLeer.nextLine();
 			Tipos t=bdti.BuscarTipos(Tipo);
+			
+			
+			
+			
+			
+			
 			break;
+			
 		case 2:
 			
 			break;
