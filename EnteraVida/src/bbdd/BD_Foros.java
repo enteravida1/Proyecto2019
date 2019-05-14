@@ -58,4 +58,25 @@ public class BD_Foros extends BD_Conector {
 		}
 	}
 
+	
+	public  Foros MostrarForo() throws TecnicException{
+		String cadenaSQL="SELECT * from foros " ;
+		Foros f=null;
+		try{
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(cadenaSQL);
+			if ( reg.next()){
+				f= new Foros(reg.getString(1),reg.getString(2),reg.getString(3),reg.getDate(4).toLocalDate(),reg.getInt(5),reg.getString(6));
+			}			
+			s.close();
+			this.cerrar();
+			return f;
+		}
+		catch ( SQLException e){
+		//	System.out.println(e.getMessage());
+			throw new TecnicException("En este momento no podemos atender su petición");
+			
+		}
+	}
 }
