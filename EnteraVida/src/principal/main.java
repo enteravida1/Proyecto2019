@@ -2,6 +2,7 @@ package principal;
 
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.Vector;
 
 import bbdd.BD_Comentarios;
 import bbdd.BD_Conector;
@@ -216,8 +217,79 @@ public class main {
 			case 4:
 				System.out.println("Introduce el nombre del usuario al que quieres controlar");
 				String us = sLeer.nextLine();
-				bdu.BuscarUsuario2(us);
+				Usuarios u = bdu.BuscarUsuario2(us);
+				menuControl(u);
+				break;
 
+			case 5:
+				System.out.println("Indica lo que quieres buscar:");
+				System.out.println("1.Foro\n 2.Tema\n 3.Guia\n 4.Noticia\n 5.Salir");
+				int opc2 = sLeer.nextInt();
+				do {
+					switch (opc2) {
+					case 1:
+						try {
+							System.out.println(bdf.MostrarForo());
+							Vector<Foros> foros = bdf.MostrarForo();
+							for (int i = 0; i < foros.size(); i++) {
+								System.out.println(foros.get(i));
+							}
+							System.out.println("Indica el foro que quieres buscar");
+							String foro = sLeer.nextLine();
+							System.out.println(bdf.BuscarForo(foro));
+						} catch (TecnicException e) {
+							System.out.println("Error tecnico");
+
+						}
+					case2 :
+						try {
+							System.out.println(bdf.MostrarForo());
+							Vector<Foros> foros = bdf.MostrarForo();
+							for (int i = 0; i < foros.size(); i++) {
+								System.out.println(foros.get(i));
+							}
+							System.out.println("Indica el foro que quieres buscar");
+							String foro = sLeer.nextLine();
+							System.out.println(bdf.BuscarForo(foro));
+						} catch (TecnicException e) {
+							System.out.println("Error tecnico");
+
+						}
+					case 3: 
+						try {
+							System.out.println(bdg.MostrarGuias2());
+							Vector<Foros> foros = bdf.MostrarForo();
+							for (int i = 0; i < foros.size(); i++) {
+								System.out.println(foros.get(i));
+							}
+							System.out.println("Indica el foro que quieres buscar");
+							String foro = sLeer.nextLine();
+							System.out.println(bdf.BuscarForo(foro));
+						} catch (TecnicException e) {
+							System.out.println("Error tecnico");
+
+						}
+					case 4:
+						try {
+							Vector<Noticias> noticias = bdn.MostrarNoticias2();
+							for (int i = 0; i < noticias.size(); i++) {
+								System.out.println("autor:" + noticias.get(i).getAutor());
+								System.out.println("descripcion :" + noticias.get(i).getDescripcion());
+								System.out.println("likes :" + noticias.get(i).getNumlikes());
+								System.out.println("titulo :" + noticias.get(i).getTitulo());
+								System.out.println("fecha de creacion:" + noticias.get(i).getFecha());
+								System.out.println("******************");
+							}
+							sLeer.nextLine();
+							System.out.println("Indica el autor de la noticia que quieres buscar");
+							String not = sLeer.nextLine();
+							System.out.println(bdn.BuscarNoticiaUsuario(not).toString());
+						} catch (TecnicException e) {
+							System.out.println("Error tecnico");
+
+						}
+					}
+				} while (opc != 5);
 				break;
 
 			}

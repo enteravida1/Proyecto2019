@@ -4,8 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.Vector;
 
 import exceptions.TecnicException;
+import modelos.Guias;
 import modelos.Guias;
 import modelos.Temas;
 
@@ -99,4 +101,26 @@ import modelos.Temas;
 				}
 			
 		}
+		public  Vector <Guias> MostrarGuias2() throws TecnicException{
+			String cadenaSQL="SELECT * from guias " ;
+			Vector <Guias> guias =new Vector <Guias>();
+			try{
+				this.abrir();
+				s=c.createStatement();
+				reg=s.executeQuery(cadenaSQL);
+				while ( reg.next()){
+					guias.add(new Guias(reg.getString(1),reg.getDate(2).toLocalDate(),reg.getString(3),reg.getString(4),reg.getString(5),reg.getString(6),reg.getInt(7)));
+				}			
+				s.close();
+				this.cerrar();
+				return guias;
+			}
+			catch ( SQLException e){
+			//	System.out.println(e.getMessage());
+				throw new TecnicException("En este momento no podemos atender su petición");
+				
+			}
+		}
+		
+
 }

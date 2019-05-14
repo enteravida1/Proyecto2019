@@ -83,4 +83,12 @@ public void setNumlikes(int numlikes) {
 
 
 
+@Override
+public String toString() {
+	return "Noticias [titulo=" + titulo + ", autor=" + autor + ", fecha=" + fecha + ", descripcion=" + descripcion
+			+ ", numlikes=" + numlikes + "]";
+}
+
+
+
 }
