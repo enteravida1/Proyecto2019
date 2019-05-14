@@ -268,7 +268,6 @@ public class main {
 								System.out.println("*******************");
 								System.out.println(guias.get(i).getDescripcion());
 								
-								
 							}
 							System.out.println("Indica el titulo de la guiaque quieres buscar");
 							String foro = sLeer.nextLine();

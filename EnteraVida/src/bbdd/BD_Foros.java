@@ -60,8 +60,8 @@ public class BD_Foros extends BD_Conector {
 	}
 
 	
-	public  Vector <Foros> MostrarForo() throws TecnicException{
-		String cadenaSQL="SELECT * from foros " ;
+	public  Vector <Foros> MostrarForo(String titulo) throws TecnicException{
+		String cadenaSQL="SELECT * from foros WHERE TITULO_TIPO ='"+ titulo+ " '" ;
 		Vector <Foros> foro =new Vector <Foros>();
 		try{
 			this.abrir();
