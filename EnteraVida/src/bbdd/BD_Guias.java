@@ -65,7 +65,7 @@ import modelos.Temas;
 		
 		
 		public  Guias BuscarGuiaAutor(String autor) throws TecnicException{
-			String cadenaSQL="SELECT * from guias WHERE AUTOR =' "+autor+ "'" ;
+			String cadenaSQL="SELECT * from guias WHERE USER =' "+autor+ "'" ;
 			Guias g=null;
 			try{
 				this.abrir();
@@ -86,7 +86,7 @@ import modelos.Temas;
 		}
 		
 		public int AñadirGuia(Guias g) throws TecnicException{
-			String cadenaSQL="INSERT INTO guias (TITULO,FECHA,AUTOR,DESARROLLADOR,PLATAFORMA,DESCRIPCION) VALUES('" + g.getTitulo() + "','" +
+			String cadenaSQL="INSERT INTO guias (TITULO,FECHA,USER,DESARROLLADOR,PLATAFORMA,DESCRIPCION) VALUES('" + g.getTitulo() + "','" +
 					g.getFecha()+"','"+g.getAutor()+"','"+g.getDesarrollador()+"','"+g.getPlataforma()+"','"+g.getDescripcion()+"')";
 			try{
 				this.abrir();
