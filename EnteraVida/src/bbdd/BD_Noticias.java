@@ -3,6 +3,7 @@ package bbdd;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 import exceptions.TecnicException;
 import modelos.Noticias;
@@ -25,7 +26,7 @@ public class BD_Noticias extends BD_Conector{
 			s=c.createStatement();
 			reg=s.executeQuery(cadenaSQL);
 			if ( reg.next()){
-				n=new Noticias(titulo,reg.getString(2),reg.getString(3),reg.getString(4),reg.getInt(5));
+				n=new Noticias(titulo,reg.getString(2),reg.getDate(3).toLocalDate(),reg.getString(4),reg.getInt(5));
 			}			
 			s.close();
 			this.cerrar();
@@ -38,7 +39,7 @@ public class BD_Noticias extends BD_Conector{
 		}
 	}
 	
-	public  Noticias BuscarNoticiaFecha(String fecha) throws TecnicException{
+	public  Noticias BuscarNoticiaFecha(LocalDate fecha) throws TecnicException{
 		String cadenaSQL="SELECT * from noticias WHERE FECHA =' "+fecha+ "'" ;
 		Noticias n=null;
 		try{
@@ -46,7 +47,7 @@ public class BD_Noticias extends BD_Conector{
 			s=c.createStatement();
 			reg=s.executeQuery(cadenaSQL);
 			if ( reg.next()){
-				n=new Noticias(fecha,reg.getString(2),reg.getString(3),reg.getString(4),reg.getInt(5));
+				n=new Noticias(reg.getString(1),reg.getString(2),fecha,reg.getString(4),reg.getInt(5));
 			}			
 			s.close();
 			this.cerrar();
@@ -68,7 +69,7 @@ public class BD_Noticias extends BD_Conector{
 			s=c.createStatement();
 			reg=s.executeQuery(cadenaSQL);
 			if ( reg.next()){
-				n=new Noticias(autor,reg.getString(2),reg.getString(3),reg.getString(4),reg.getInt(5));
+				n=new Noticias(reg.getString(1),reg.getString(2),reg.getDate(3).toLocalDate(),reg.getString(4),reg.getInt(5));
 			}			
 			s.close();
 			this.cerrar();

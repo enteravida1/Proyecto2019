@@ -59,6 +59,7 @@ public class BD_Foros extends BD_Conector {
 		}
 	}
 	
+	
 	public  Foros MostrarForos() throws TecnicException{
 		String cadenaSQL="SELECT * from foros" ;
 		Foros u=null;
@@ -79,7 +80,6 @@ public class BD_Foros extends BD_Conector {
 					
 				}
 			
-			
+	}	
 				
-}
 }
