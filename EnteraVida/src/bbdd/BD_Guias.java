@@ -109,7 +109,7 @@ import modelos.Temas;
 				s=c.createStatement();
 				reg=s.executeQuery(cadenaSQL);
 				while ( reg.next()){
-					guias.add(new Guias(reg.getString(1),reg.getDate(2).toLocalDate(),reg.getString(3),reg.getString(4),reg.getString(5),reg.getString(6),reg.getInt(7)));
+					guias.add(new Guias(reg.getString("TITULO"),reg.getDate("FECHA").toLocalDate(),reg.getString("USER"),reg.getString("DESARROLLADOR"),reg.getString("PLATAFORMA"),reg.getString("DESCRIPCION"),reg.getInt("NUMERO_LIKES")));
 				}			
 				s.close();
 				this.cerrar();

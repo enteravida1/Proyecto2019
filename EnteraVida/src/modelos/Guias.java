@@ -38,6 +38,12 @@ public class Guias {
 
 	
 
+	@Override
+	public String toString() {
+		return "Guias [titulo=" + titulo + ", fecha=" + fecha + ", autor=" + autor + ", desarrollador=" + desarrollador
+				+ ", plataforma=" + plataforma + ", descripcion=" + descripcion + ", num_likes=" + num_likes + "]";
+	}
+
 	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}

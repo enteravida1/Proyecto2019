@@ -13,7 +13,7 @@ import bbdd.BD_Temas;
 import bbdd.BD_Tipos;
 import bbdd.BD_Usuarios;
 import exceptions.TecnicException;
-import modelos.Foros;
+import modelos.Guias;
 import modelos.Guias;
 import modelos.Noticias;
 import modelos.Usuarios;
@@ -170,7 +170,7 @@ public class main {
 				System.out.println("Escribe una descripcion para el foro:\n");
 				String descF = sLeer.nextLine();
 
-				Foros f = new Foros(eligeTipo, user, tituloF, fechaActual, 0, descF);
+				Guias f = new Guias(eligeTipo, user, tituloF, fechaActual, 0, descF);
 
 				int filasf = bdf.CrearForo(f);
 				switch (filasf) {
@@ -230,7 +230,7 @@ public class main {
 					case 1:
 						try {
 							System.out.println(bdf.MostrarForo());
-							Vector<Foros> foros = bdf.MostrarForo();
+							Vector<Guias> foros = bdf.MostrarForo();
 							for (int i = 0; i < foros.size(); i++) {
 								System.out.println(foros.get(i));
 							}
@@ -241,10 +241,9 @@ public class main {
 							System.out.println("Error tecnico");
 
 						}
-					case2 :
-						try {
+						case2: try {
 							System.out.println(bdf.MostrarForo());
-							Vector<Foros> foros = bdf.MostrarForo();
+							Vector<Guias> foros = bdf.MostrarForo();
 							for (int i = 0; i < foros.size(); i++) {
 								System.out.println(foros.get(i));
 							}
@@ -255,16 +254,25 @@ public class main {
 							System.out.println("Error tecnico");
 
 						}
-					case 3: 
+					case 3:
 						try {
-							System.out.println(bdg.MostrarGuias2());
-							Vector<Foros> foros = bdf.MostrarForo();
-							for (int i = 0; i < foros.size(); i++) {
-								System.out.println(foros.get(i));
+							Vector<Guias> guias = bdg.MostrarGuias2();
+							for (int i = 0; i < guias.size(); i++) {
+								System.out.println("Titulo: " + guias.get(i).getTitulo());
+								System.out.println("*****************");
+								System.out.println("autor:"+ guias.get(i).getAutor());
+								System.out.println("fecha :" +guias.get(i).getFecha());
+								System.out.println("desarrollador: "+ guias.get(i).getDesarrollador());
+								System.out.println("numero de Likes " + guias.get(i).getNum_likes());
+								System.out.println("plataforma del juego: " + guias.get(i).getPlataforma());
+								System.out.println("*******************");
+								System.out.println(guias.get(i).getDescripcion());
+								
+								
 							}
-							System.out.println("Indica el foro que quieres buscar");
+							System.out.println("Indica el titulo de la guiaque quieres buscar");
 							String foro = sLeer.nextLine();
-							System.out.println(bdf.BuscarForo(foro));
+							System.out.println(bdf.BuscarForo(foro).toString());
 						} catch (TecnicException e) {
 							System.out.println("Error tecnico");
 
@@ -298,6 +306,89 @@ public class main {
 	}
 
 	private static void menuCliente() {
+		LocalDate fechaactual = LocalDate.now();
+		BD_Conector.BD_Ini("enteravida");
+		BD_Usuarios bdu = new BD_Usuarios();
+		BD_Tipos bdti = new BD_Tipos();
+		BD_Foros bdf = new BD_Foros();
+		BD_Temas bdte = new BD_Temas();
+		BD_Comentarios bdc = new BD_Comentarios();
+		BD_Noticias bdn = new BD_Noticias();
+		BD_Guias bdg = new BD_Guias();
+
+		Scanner sLeer = new Scanner(System.in);
+		int usu = 0;
+		System.out.println(" 1.Crear post\n 2.buscar post\n 3.Buscar noticia\n 4.Buscar guía");
+		usu = sLeer.nextInt();
+
+		switch (usu) {
+		case 1:
+			System.out.println(bdti.MostrarTipos());
+
+			System.out.println("Escribe el titulo del tipo");
+			String Tipo = sLeer.nextLine();
+			Tipos t = bdti.BuscarTipos(Tipo);
+
+			System.out.println(bdf.MostrarForos());
+
+			System.out.println("Escribe el titulo del foro");
+			String Foro = sLeer.nextLine();
+			Guias f = bdf.BuscarForo(Foro);
+
+			System.out.println("Escribe un titulo para el post: ");
+			String titulo_post = sLeer.nextLine();
+			System.out.println("Pon una descripcion: ");
+			String desc_post = sLeer.nextLine();
+
+			Temas p = new Temas(0, 0, fechaactual, Foro, titulo_post, user, desc_post);
+
+			int filas = bdte.CrearTema(p);
+			switch (filas) {
+			case 1:
+				System.out.println("\nPost Creado.");
+				break;
+			case 0:
+				System.out.println("\nNo se ha podido crear el Post.");
+				break;
+			case -1:
+				System.out.println("\nProblemas técnicos.");
+
+				break;
+
+			}
+			break;
+
+		case 2:
+			System.out.println(bdti.MostrarTipos());
+			System.out.println("Elige el tipo al que quieres entrar: ");
+			String eleccion = sLeer.nextLine();
+			System.out.println(bdti.BuscarTipos(eleccion));
+
+			System.out.println(bdf.MostrarForos());
+			System.out.println("Elige el foro al que quieres entrar: ");
+			String eleccion1 = sLeer.nextLine();
+			System.out.println(bdf.BuscarForo(eleccion1));
+
+			System.out.println("Escribe un titulo para el post: ");
+			String titulo_post1 = sLeer.nextLine();
+
+			System.out.println(bdte.BuscarTemaTitT(titulo_post1));
+			break;
+
+		case 3:
+			System.out.println("Introduce la noticia que quieras buscar");
+			String not = sLeer.nextLine();
+			System.out.println(bdn.BuscarNoticiaTitulo(not));
+
+			break;
+		case 4:
+			System.out.println("Introduce la guia que quieras buscar");
+			String gui = sLeer.nextLine();
+			System.out.println(bdg.BuscarGuiaTit(gui));
+
+			break;
+
+		}
 
 	}
 
