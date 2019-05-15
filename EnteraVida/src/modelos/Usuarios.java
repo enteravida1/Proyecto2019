@@ -8,7 +8,7 @@ public class Usuarios {
 	private String estado;
 	
 	
-	public Usuarios(String clave, String usuario, String tipo,String estado) {
+	public Usuarios(String usuario, String clave, String tipo,String estado) {
 		super();
 		this.clave = clave;
 		this.usuario = usuario;

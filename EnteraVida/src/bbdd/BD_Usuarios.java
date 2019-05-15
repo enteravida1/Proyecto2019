@@ -107,7 +107,7 @@ public class BD_Usuarios extends BD_Conector {
 		 */
 		
 		public int  EliminarUsuario(Usuarios u)  throws TecnicException{
-			String cadenaSQL=" DELETE  from usuarios WHERE USER ='" +u.getUsuario()+"'";
+			String cadenaSQL="DELETE from usuarios WHERE USER ='" +u.getUsuario()+"'";
 			try{
 				this.abrir();
 				s=c.createStatement();

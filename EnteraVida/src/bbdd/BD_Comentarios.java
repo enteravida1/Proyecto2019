@@ -35,8 +35,9 @@ public class BD_Comentarios extends BD_Conector {
 	 */
 	
 	public int CrearComentario(Comentarios ca) throws TecnicException{
-		String cadenaSQL="INSERT INTO comentarios (TITULO_TEMA,TITULO_FORO,ORDEN,USER,FECHA,CONTENIDO,NUM_LIKES) VALUES('" + ca.getTituloTema() + "','" +
+		String cadenaSQL="INSERT INTO comentarios  VALUES('" + ca.getTituloTema() + "','" +
 				ca.getTituloForo()+ "','" +ca.getOrden()+  "','" + ca.getUser() + "','" + ca.getFecha()+ "','" + ca.getContenido()+ "','"+ca.getNlikes()+"')"; 
+		
 		try{
 			this.abrir();
 			s=c.createStatement();
@@ -60,7 +61,7 @@ public class BD_Comentarios extends BD_Conector {
 	 * @return ca : el objeto construido que se ha formado al buscar el comentario
 	 */
 	public  Comentarios BuscarComentarios(int orden) throws TecnicException{
-		String cadenaSQL="SELECT * from comentarios WHERE ORDEN =' "+orden+"'" ;
+		String cadenaSQL="SELECT * from comentarios WHERE ORDEN ='"+orden+"'" ;
 		Comentarios ca=null;
 		try{
 			this.abrir();

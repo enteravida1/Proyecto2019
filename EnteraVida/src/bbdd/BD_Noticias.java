@@ -21,14 +21,14 @@ public class BD_Noticias extends BD_Conector{
 	}
 	
 	public  Noticias BuscarNoticiaTitulo(String titulo) throws TecnicException{
-		String cadenaSQL="SELECT * from noticias WHERE TITULO =' "+titulo+ "'" ;
+		String cadenaSQL="SELECT * from noticias WHERE TITULO ='"+titulo+ "'" ;
 		Noticias n=null;
 		try{
 			this.abrir();
 			s=c.createStatement();
 			reg=s.executeQuery(cadenaSQL);
 			if ( reg.next()){
-				n=new Noticias(titulo,reg.getString(2),reg.getDate(3).toLocalDate(),reg.getString(4),reg.getInt(5));
+				n=new Noticias(titulo,reg.getString("USER"),reg.getDate("FECHA").toLocalDate(),reg.getString("DESCRIPCION"),reg.getInt("NUM_LIKES"));
 			}			
 			s.close();
 			this.cerrar();
@@ -42,7 +42,7 @@ public class BD_Noticias extends BD_Conector{
 	}
 	
 	public  Noticias BuscarNoticiaFecha(LocalDate fecha) throws TecnicException{
-		String cadenaSQL="SELECT * from noticias WHERE FECHA =' "+fecha+ "'" ;
+		String cadenaSQL="SELECT * from noticias WHERE FECHA ='"+fecha+ "'" ;
 		Noticias n=null;
 		try{
 			this.abrir();
@@ -71,9 +71,9 @@ public class BD_Noticias extends BD_Conector{
 			s=c.createStatement();
 			reg=s.executeQuery(cadenaSQL);
 			if ( reg.next()){
-				java.sql.Date fecha = reg.getDate("FECHA");
-				LocalDate fechaBuena = fecha.toLocalDate();
-				n=new Noticias(reg.getString("TITULO"),autor,fechaBuena,reg.getString("DESCRIPCION"),reg.getInt("NUM_LIKES"));
+			//	java.sql.Date fecha = reg.getDate("FECHA");
+				//LocalDate fechaBuena = fecha.toLocalDate();
+				n=new Noticias(reg.getString("TITULO"),autor,reg.getDate("FECHA").toLocalDate(),reg.getString("DESCRIPCION"),reg.getInt("NUM_LIKES"));
 			}			
 			s.close();
 			this.cerrar();
@@ -88,8 +88,7 @@ public class BD_Noticias extends BD_Conector{
 	
 	
 	public int AñadirNoticia(Noticias n) throws TecnicException{
-		String cadenaSQL="INSERT INTO noticias (TITULO, USER, FECHA,DESCRIPCION) VALUES('" + n.getTitulo() + "','" +
-				n.getAutor()+"','"+n.getFecha()+"','"+n.getDescripcion()+")"; 
+		String cadenaSQL="INSERT INTO noticias  VALUES('" + n.getAutor()+"','"+n.getFecha()+"','"+n.getDescripcion()+ "','" + n.getNumlikes()+ "','"+n.getTitulo()+"')"; 
 		try{
 			this.abrir();
 			s=c.createStatement();

@@ -20,7 +20,7 @@ public class BD_Foros extends BD_Conector {
 		super();
 	}
 	public int CrearForo(Foros f) throws TecnicException{
-		String cadenaSQL="INSERT INTO foros (TITULO_TIPO,USER,TITULO-FORO,FECHA,NUM_TEMAS,DESCRIPCION) VALUES('" + f.getTituloTipo() + "','" +
+		String cadenaSQL="INSERT INTO foros VALUES('" + f.getTituloTipo() + "','" +
 				f.getUser()+ "','" + f.getTituloForo()  + "','" + f.getFecha() + "','" + f.getNtemas()+ "','" + f.getDesc()+ "')"; 
 		try{
 			this.abrir();
@@ -39,14 +39,14 @@ public class BD_Foros extends BD_Conector {
 	
 	
 	public  Foros BuscarForo(String tituloForo) throws TecnicException{
-		String cadenaSQL="SELECT * from foros WHERE TITULO-FORO ='"+ tituloForo+ " '" ;
+		String cadenaSQL="SELECT * from foros WHERE TITULO-FORO ='"+tituloForo+"'" ;
 		Foros f=null;
 		try{
 			this.abrir();
 			s=c.createStatement();
 			reg=s.executeQuery(cadenaSQL);
 			if ( reg.next()){
-				f= new Foros(reg.getString(1),reg.getString(2),tituloForo,reg.getDate(4).toLocalDate(),reg.getInt(5),reg.getString(6));
+				f= new Foros(reg.getString("TITULO_TIPO"),reg.getString("USER"),tituloForo,reg.getDate("FECHA").toLocalDate(),reg.getInt("NUM_TEMAS"),reg.getString("DESCRIPCION"));
 			}			
 			s.close();
 			this.cerrar();

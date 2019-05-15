@@ -22,8 +22,8 @@ import modelos.Usuarios;
 
 		
 		public int CrearTema(Temas t) throws TecnicException{
-			String cadenaSQL="INSERT INTO temas (FECHA,TITULO_FORO, TITULO_TEMA, AUTOR,DESCRIPCION) VALUES('" + t.getFecha() + "','" +
-					t.getTitulo_foro()+"','"+t.getTitulo_tema()+"','"+t.getAutor()+"','"+t.getDescripcion()+"')";
+			String cadenaSQL="INSERT INTO temas  VALUES ('" +t.getTitulo_foro()+"','"+t.getTitulo_tema()+"','"+t.getAutor()+"','"+t.getDescripcion()+"','"
+					+t.getNum_likes()+"','"+t.getNum_comentarios()+"','"+t.getFecha()+ "')";
 			try{
 				this.abrir();
 				s=c.createStatement();
@@ -83,7 +83,7 @@ import modelos.Usuarios;
 		
 
 		public  Vector <Temas> MostrarTemas1(String titulo_foro) throws TecnicException{
-			String cadenaSQL="SELECT * from temas WHERE TITULO_FORO =' "+titulo_foro+ "'" ;
+			String cadenaSQL="SELECT * from temas WHERE TITULO_FORO ='"+titulo_foro+ "'" ;
 			Vector <Temas> temas =new Vector <Temas>();
 			try{
 				this.abrir();

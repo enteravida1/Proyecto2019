@@ -19,6 +19,7 @@ import modelos.Guias;
 import modelos.Guias;
 import modelos.Noticias;
 import modelos.Temas;
+import modelos.Tipos;
 import modelos.Usuarios;
 
 public class main {
@@ -51,18 +52,13 @@ public class main {
 				System.out.println("Introduce una contraseña");
 				String pass1 = sLeer.nextLine();
 
-				System.out.println("Introduce de nuevo la contraseña");
-				String pass2 = sLeer.nextLine();
-
-				if (!pass1.equals(pass2))
-					System.out.println("Las contraseñas no coinciden");
-				else {
+				
 					Usuarios u = new Usuarios(user, pass1, "user", null);
 
 					int filas = bdu.CrearUsuario(u);
 					switch (filas) {
 					case 1:
-						System.out.println("\nAlumno añadido");
+						System.out.println("\nUsuario añadido");
 						break;
 					case 0:
 						System.out.println("\nNo añadido");
@@ -72,7 +68,7 @@ public class main {
 
 						break;
 
-					}
+					
 				}
 				break;
 			case 2:
@@ -84,15 +80,15 @@ public class main {
 				String pass = sLeer.nextLine();
 
 				// System.out.println(bdu.BuscarUsuario(user, pass).toString());
-				Usuarios u = bdu.BuscarUsuario(user, pass);
-				if (u == null) {
+				Usuarios u1 = bdu.BuscarUsuario(user, pass);
+				if (u1 == null) {
 					System.out.println("usuario o contraseña incorrectas");
 				} else {
-					System.out.println(u.toString());
-					if (u.getTipo().equals("admin"))
+					System.out.println(u1.toString());
+					if (u1.getTipo().equals("admin"))
 						menuAdministrador(user);
 					else
-						menuCliente();
+						menuCliente(user);
 				}
 				break;
 
@@ -121,10 +117,11 @@ public class main {
 			System.out.println("\n\nBienvenido administrador  " + user);
 			System.out.println("***************");
 			System.out.println(
-					" 1.Crear guía\n 2.Crear foro\n 3.Crear noticia\n 4.Controlar usuarios\n 5.Buscar foro, guia, noticia");
+					" 1.Crear guía\n 2.Crear foro\n 3.Crear noticia\n 4.Controlar usuarios\n 5.Buscar foro, post, guia, noticia");
 			opc = sLeer.nextInt();
 			switch (opc) {
 			case 1:
+				sLeer.nextLine();
 				System.out.println("Indica un titulo para la guia");
 				String tituloG = sLeer.nextLine();
 
@@ -136,12 +133,12 @@ public class main {
 
 				System.out.println("Escribe la guia");
 				String desc = sLeer.nextLine();
-				Guias g = new Guias(tituloG, fechaActual, user, desarrollador, plataforma, desc, 0);
+				Guias g = new Guias(tituloG, fechaActual, user, desarrollador, plataforma, desc, 1);
 
 				int filasg = bdg.AñadirGuia(g);
 				switch (filasg) {
 				case 1:
-					System.out.println("\nGuia añadido");
+					System.out.println("\nGuia añadida");
 					break;
 				case 0:
 					System.out.println("\nGuia NO añadida");
@@ -156,8 +153,9 @@ public class main {
 				break;
 
 			case 2:
-
-				System.out.println("Elige un tipo : 1.General\n 2.Videojuegos\n 3.Tecnologia \4. Salir");
+				try {
+				sLeer.nextLine();
+				System.out.println("Elige un tipo : General\n Videojuegos\n Tecnologia ");
 				String eligeTipo = sLeer.nextLine();
 
 				System.out.println(bdti.BuscarTpos(eligeTipo).toString());
@@ -174,6 +172,7 @@ public class main {
 				switch (filasf) {
 				case 1:
 					System.out.println("\nForo añadido");
+					break;
 				case 0:
 					System.out.println("\nForo NO añadido");
 					break;
@@ -183,11 +182,16 @@ public class main {
 					break;
 
 				}
-				System.out.println(bdf.BuscarForo(tituloF).toString());
-				break;
+				//System.out.println(bdf.BuscarForo(tituloF).toString());
+				//break;
+				} catch (TecnicException e) {
+					System.out.println("Error tecnico");
+					break;
+					}
+				
 
 			case 3:
-
+				sLeer.nextLine();
 				System.out.println("Indica un titulo para la noticia:\n");
 				String tituloN = sLeer.nextLine();
 
@@ -200,6 +204,7 @@ public class main {
 				switch (filasn) {
 				case 1:
 					System.out.println("\nNoticia añadida");
+					break;
 				case 0:
 					System.out.println("\nNoticia NO añadido");
 					break;
@@ -207,10 +212,11 @@ public class main {
 					System.out.println("\nProblemas técnicos");
 					break;
 				}
-				System.out.println(bdn.BuscarNoticiaTitulo(tituloN).toString());
+				//System.out.println(bdn.BuscarNoticiaTitulo(tituloN).toString());
 				break;
 
 			case 4:
+				sLeer.nextLine();
 				System.out.println("Introduce el nombre del usuario al que quieres controlar");
 				String us = sLeer.nextLine();
 				Usuarios u = bdu.BuscarUsuario2(us);
@@ -351,8 +357,9 @@ public class main {
 							System.out.println(bdf.BuscarForo(foro).toString());
 						} catch (TecnicException e) {
 							System.out.println("Error tecnico");
-
+							break;
 						}
+						break;
 					case 4:
 						try {
 							Vector<Noticias> noticias = bdn.MostrarNoticias2();
@@ -370,18 +377,20 @@ public class main {
 							System.out.println(bdn.BuscarNoticiaUsuario(not).toString());
 						} catch (TecnicException e) {
 							System.out.println("Error tecnico");
+							break;
 
 						}
+						break;
 					}
 				} while (opc != 5);
-				break;
+				
 
 			}
 		} while (opc != 6);
 
 	}
 
-	private static void menuCliente() {
+	private static void menuCliente(String user) throws TecnicException {
 		LocalDate fechaactual = LocalDate.now();
 		BD_Conector.BD_Ini("enteravida");
 		BD_Usuarios bdu = new BD_Usuarios();
@@ -393,78 +402,210 @@ public class main {
 		BD_Guias bdg = new BD_Guias();
 
 		Scanner sLeer = new Scanner(System.in);
-		int usu = 0;
-		System.out.println(" 1.Crear post\n 2.buscar post\n 3.Buscar noticia\n 4.Buscar guía");
-		usu = sLeer.nextInt();
-
-		switch (usu) {
-		case 1:
-			System.out.println(bdti.MostrarTipos());
-
-			System.out.println("Escribe el titulo del tipo");
-			String Tipo = sLeer.nextLine();
-			Tipos t = bdti.BuscarTipos(Tipo);
-
-			System.out.println(bdf.MostrarForos());
-
-			System.out.println("Escribe el titulo del foro");
-			String Foro = sLeer.nextLine();
-			Guias f = bdf.BuscarForo(Foro);
-
-			System.out.println("Escribe un titulo para el post: ");
-			String titulo_post = sLeer.nextLine();
-			System.out.println("Pon una descripcion: ");
-			String desc_post = sLeer.nextLine();
-
-			Temas p = new Temas(0, 0, fechaactual, Foro, titulo_post, user, desc_post);
-
-			int filas = bdte.CrearTema(p);
-			switch (filas) {
+		int opc1 = 0;
+		
+		do {
+			System.out.println(" 1.Crear post\n 2.buscar post\n 3.Buscar noticia\n 4.Buscar guía\n 5.Salir");
+			opc1 = sLeer.nextInt();
+			switch (opc1) {
 			case 1:
-				System.out.println("\nPost Creado.");
-				break;
-			case 0:
-				System.out.println("\nNo se ha podido crear el Post.");
-				break;
-			case -1:
-				System.out.println("\nProblemas técnicos.");
+				sLeer.nextLine();
+				/*System.out.println("Escribe el titulo del tipo que quieres entrar: Tecnologia, Videojuegos o General ");
+				String Tipo = sLeer.nextLine();
+				*/
 
+				try {
+					Vector<Foros> foros = bdf.MostrarForo();
+					for (int i = 0; i < foros.size(); i++) {
+						System.out
+								.println("Titulo del tipo donde se encuentra el foro: " + foros.get(i).getTituloTipo());
+						System.out.println("Autor del foro " + foros.get(i).getUser());
+						System.out.println("Titulo del foro " + foros.get(i).getTituloForo());
+						System.out.println("Fecha de creacion " + foros.get(i).getFecha());
+						System.out.println("Número de temas que contiene el foro " + foros.get(i).getNtemas());
+						System.out.println("Pequeña descripción " + foros.get(i).getDesc());
+						System.out.println("*******************");
+					}
+					System.out.println("Escribe el titulo del foro");
+					String foro = sLeer.nextLine();
+					//Foros f = bdf.BuscarForo(foro);
+					//do {
+						//System.out.println("El foro no existe, vuelva a introducir el nombre");
+					//} while (f == null);
+
+					System.out.println("Escribe un titulo para el post: ");
+					String titulo_post = sLeer.nextLine();
+					System.out.println("Pon una descripcion: ");
+					String desc_post = sLeer.nextLine();
+
+					Temas p = new Temas(1, 1, fechaactual, foro, titulo_post, user, desc_post);
+
+					int filas = bdte.CrearTema(p);
+					switch (filas) {
+					case 1:
+						System.out.println("\nPost Creado.");
+						
+						
+					case -1:
+						System.out.println("\nProblemas técnicos.");
+
+						
+
+					}
+
+				} catch (TecnicException e) {
+					System.out.println("Error tecnico");
+					break;
+
+				}
+
+				break;
+
+			case 2:
+				try {
+				Vector<Foros> foros = bdf.MostrarForo();
+					for (int i = 0; i < foros.size(); i++) {
+						System.out
+								.println("Titulo del tipo donde se encuentra el foro: " + foros.get(i).getTituloTipo());
+						System.out.println("Autor del foro " + foros.get(i).getUser());
+						System.out.println("Titulo del foro " + foros.get(i).getTituloForo());
+						System.out.println("Fecha de creacion " + foros.get(i).getFecha());
+						System.out.println("Número de temas que contiene el foro " + foros.get(i).getNtemas());
+						System.out.println("Pequeña descripción " + foros.get(i).getDesc());
+						System.out.println("****************");
+						
+					}
+					
+					sLeer.nextLine();
+					System.out.println("Indica el titulo foro que quieres buscar");
+					String foro = sLeer.nextLine();
+					
+
+					Vector<Temas> temas = bdte.MostrarTemas1(foro);
+					for (int i = 0; i < temas.size(); i++) {
+						System.out.println(
+								"Titulo del foro donde se encuentra el tema: " + temas.get(i).getTitulo_foro());
+						System.out.println("Autor del tema " + temas.get(i).getAutor());
+						System.out.println("Titulo del tema " + temas.get(i).getTitulo_tema());
+						System.out.println("Fecha de creacion " + temas.get(i).getFecha());
+						System.out.println(
+								"Número de comentarios que contiene el tema " + temas.get(i).getNum_comentarios());
+						System.out.println("Número de likes " + temas.get(i).getNum_likes());
+						System.out.println("Contenido del tema " + temas.get(i).getDescripcion());
+						System.out.println("*******************");
+						Vector<Comentarios> comentarios = bdc.MostrarComentarios(temas.get(i).getTitulo_tema());
+
+						for (int j = 0; j < comentarios.size(); j++) {
+							System.out.println("orden del comentario en el tema: " + comentarios.get(j).getOrden());
+							System.out.println("fecha de creacion " + comentarios.get(j).getFecha());
+							System.out.println("usuario creador: " + comentarios.get(j).getUser());
+							System.out.println("contenido del comentario " + comentarios.get(j).getContenido());
+							System.out.println("numero de likes: " + comentarios.get(j).getNlikes());
+							System.out.println("********************");
+							System.out.println("********************");
+
+						
+
+						System.out.println("Quieres hacer un comentario al tema? pon S si quieres y N si no quieres");
+						char opcion = sLeer.nextLine().charAt(0);
+
+						if (opcion == 'S') {
+
+							System.out.println("Escribe el comentario");
+							String coment = sLeer.nextLine();
+							Comentarios ca = new Comentarios(temas.get(i).getTitulo_tema(), foro, 1, user, fechaactual,coment, 1);
+
+							int filasc = bdc.CrearComentario(ca);
+							switch (filasc) {
+							case 1:
+								System.out.println("\nComentario añadido");
+								break;
+							case 0:
+								System.out.println("\nComentario no añadida");
+								break;
+							case -1:
+								System.out.println("\nProblemas técnicos");
+
+								break;
+
+							}
+						
+
+						}
+						if (opcion == 'N') {
+							System.out.println("no se ha hecho el comentario");
+							break;
+						}
+						if (opcion != 'S' && opcion != 'N') {
+							System.out.println("Error Tecnico");
+							break;
+						}
+						}
+
+					}
+
+				} catch (TecnicException e) {
+					System.out.println("Error tecnico");
+					break;
+				}
+				break;
+			case 3:
+				try {
+					Vector<Noticias> noticias = bdn.MostrarNoticias2();
+					for (int i = 0; i < noticias.size(); i++) {
+						System.out.println("autor:" + noticias.get(i).getAutor());
+						System.out.println("descripcion :" + noticias.get(i).getDescripcion());
+						System.out.println("likes :" + noticias.get(i).getNumlikes());
+						System.out.println("titulo :" + noticias.get(i).getTitulo());
+						System.out.println("fecha de creacion:" + noticias.get(i).getFecha());
+						System.out.println("******************");
+						
+					}
+					
+					
+				sLeer.nextLine();
+					System.out.println("Indica el titulo de la noticia que quieres buscar");
+					String not = sLeer.nextLine();
+					System.out.println(bdn.BuscarNoticiaTitulo(not).toString());
+					break;
+				} catch (TecnicException e) {
+					System.out.println("Error tecnico");
+					
+				}
+				break;
+				
+				
+			case 4:
+				try {
+					Vector<Guias> guias = bdg.MostrarGuias2();
+					for (int i = 0; i < guias.size(); i++) {
+						System.out.println("Titulo: " + guias.get(i).getTitulo());
+						System.out.println("autor:" + guias.get(i).getAutor());
+						System.out.println("fecha :" + guias.get(i).getFecha());
+						System.out.println("desarrollador: " + guias.get(i).getDesarrollador());
+						System.out.println("numero de Likes " + guias.get(i).getNum_likes());
+						System.out.println("plataforma del juego: " + guias.get(i).getPlataforma());
+						System.out.println(guias.get(i).getDescripcion());
+
+						System.out.println("******************");
+					}
+					
+					
+					
+					sLeer.nextLine();
+					System.out.println("Indica el titulo de la guia que quieres buscar");
+					String tguia = sLeer.nextLine();
+					System.out.println(bdg.BuscarGuiaTit(tguia).toString());
+					break;
+				} catch (TecnicException e) {
+					System.out.println("Error tecnico");
+				
+				}
 				break;
 
 			}
-			break;
-
-		case 2:
-			System.out.println(bdti.MostrarTipos());
-			System.out.println("Elige el tipo al que quieres entrar: ");
-			String eleccion = sLeer.nextLine();
-			System.out.println(bdti.BuscarTipos(eleccion));
-
-			System.out.println(bdf.MostrarForos());
-			System.out.println("Elige el foro al que quieres entrar: ");
-			String eleccion1 = sLeer.nextLine();
-			System.out.println(bdf.BuscarForo(eleccion1));
-
-			System.out.println("Escribe un titulo para el post: ");
-			String titulo_post1 = sLeer.nextLine();
-
-			System.out.println(bdte.BuscarTemaTitT(titulo_post1));
-			break;
-
-		case 3:
-			System.out.println("Introduce la noticia que quieras buscar");
-			String not = sLeer.nextLine();
-			System.out.println(bdn.BuscarNoticiaTitulo(not));
-
-			break;
-		case 4:
-			System.out.println("Introduce la guia que quieras buscar");
-			String gui = sLeer.nextLine();
-			System.out.println(bdg.BuscarGuiaTit(gui));
-
-			break;
-
-		}
+			
+		} while (opc1 != 5);
 
 	}
 
@@ -481,58 +622,68 @@ public class main {
 			opc = sLeer.nextInt();
 			switch (opc) {
 			case 1:
-				System.out.println(
-						"¿Quieres advertir al usuario " + us.getUsuario() + "/n S para decir si o N para decir no?");
-				char opcion = sLeer.nextLine().charAt(0);
+			sLeer.nextLine();
+						System.out.println("Quieres hacer un comentario al tema? pon S si quieres y N si no quieres");
+						char opcion = sLeer.nextLine().charAt(0);
 
-				if (opcion != 'S' || opcion != 'N') {
-					System.out.println("Error al elegir la opcion");
+				if (opcion != 'S' && opcion != 'N') {
+					System.out.println("Error Tecnico");
 					break;
-				} else {
+				}
+				
 					if (opcion == 'S') {
 						bdu.CambiarEstado1(us);
 						System.out.println(
 								"Se ha cambiado el estado del usuario " + us.getUsuario() + " a \"advertido\" ");
 						break;
-					} else
+					} 
+					if (opcion=='N') {
 						System.out.println("No se ha cambiado el estado del usuario " + us.getUsuario());
 					break;
-				}
+					}
+					break;
 
 			case 2:
+				sLeer.nextLine();
 				System.out.println(
 						"¿Quieres bloquear al usuario " + us.getUsuario() + "/n S para decir si o N para decir no?");
 				opcion = sLeer.nextLine().charAt(0);
 
-				if (opcion != 'S' || opcion != 'N') {
-					System.out.println("Error al elegir la opcion");
+				if (opcion != 'S' && opcion != 'N') {
+					System.out.println("Error Tecnico");
 					break;
-				} else {
+				}
+				
 					if (opcion == 'S') {
 						bdu.CambiarEstado2(us);
 						System.out.println(
 								"Se ha cambiado el estado del usuario " + us.getUsuario() + " a \"bloqueado\" ");
 						break;
-					} else
+					} if (opcion=='N') {
 						System.out.println("No se ha cambiado el estado del usuario " + us.getUsuario());
+						break;
 				}
 				break;
 
 			case 3:
+				sLeer.nextLine();
 				System.out.println(
 						"¿Quieres eliminar al usuario " + us.getUsuario() + "/n S para decir si o N para decir no?");
 				opcion = sLeer.nextLine().charAt(0);
 
-				if (opcion != 'S' || opcion != 'N') {
-					System.out.println("Error al elegir la opcion");
+				if (opcion != 'S' && opcion != 'N') {
+					System.out.println("Error Tecnico");
 					break;
-				} else {
+				}
+				
 					if (opcion == 'S') {
 						bdu.EliminarUsuario(us);
 						System.out.println("Se ha eliminado al usuario " + us.getUsuario());
 						break;
-					} else
+					} 
+					if (opcion == 'N') {
 						System.out.println("No se ha cambiado el estado del usuario " + us.getUsuario());
+						break;
 				}
 				break;
 

@@ -22,14 +22,14 @@ import modelos.Temas;
 
 		
 		public  Guias BuscarGuiaTit(String titulo) throws TecnicException{
-			String cadenaSQL="SELECT * from guias WHERE TITULO =' "+titulo+ "'" ;
+			String cadenaSQL="SELECT * from guias WHERE TITULO ='"+titulo+ "'" ;
 			Guias g=null;
 			try{
 				this.abrir();
 				s=c.createStatement();
 				reg=s.executeQuery(cadenaSQL);
 				if ( reg.next()){
-					g=new Guias(titulo,reg.getDate(2).toLocalDate(),reg.getString(3),reg.getString(4),reg.getString(5),reg.getString(6),reg.getInt(7));
+					g=new Guias(titulo,reg.getDate("FECHA").toLocalDate(),reg.getString("USER"),reg.getString("DESARROLLADOR"),reg.getString("PLATAFORMA"),reg.getString("DESCRIPCION"),reg.getInt("NUMERO_LIKES"));
 				}			
 				s.close();
 				this.cerrar();
@@ -37,7 +37,7 @@ import modelos.Temas;
 			}
 			catch ( SQLException e){
 			//	System.out.println(e.getMessage());
-				throw new TecnicException("En este momento no podemos atender su peticiï¿½n");
+				throw new TecnicException("En este momento no podemos atender su peticion");
 				
 			}
 		}
@@ -80,14 +80,14 @@ import modelos.Temas;
 			}
 			catch ( SQLException e){
 			//	System.out.println(e.getMessage());
-				throw new TecnicException("En este momento no podemos atender su peticiï¿½n");
+				throw new TecnicException("En este momento no podemos atender su peticion");
 				
 			}
 		}
 		
 		public int AñadirGuia(Guias g) throws TecnicException{
-			String cadenaSQL="INSERT INTO guias (TITULO,FECHA,USER,DESARROLLADOR,PLATAFORMA,DESCRIPCION) VALUES('" + g.getTitulo() + "','" +
-					g.getFecha()+"','"+g.getAutor()+"','"+g.getDesarrollador()+"','"+g.getPlataforma()+"','"+g.getDescripcion()+"')";
+			String cadenaSQL="INSERT INTO guias VALUES('" + g.getAutor() + "','" +
+					g.getFecha()+"','"+g.getDescripcion()+"','"+g.getNum_likes()+"','"+g.getTitulo()+"','"+g.getDesarrollador()+"','"+g.getPlataforma()+"')";
 			try{
 				this.abrir();
 				s=c.createStatement();
