@@ -1,17 +1,19 @@
 package modelos;
 
+import java.time.LocalDate;
+
 public class Temas {
 	
 	private int num_comentarios;
 	private int num_likes;
-	private String fecha;
+	private LocalDate fecha;
 	private String titulo_foro;
 	private String titulo_tema;
 	private String autor;
 	private String descripcion;
 	
 	
-	public Temas(int num_comentarios, int num_likes, String fecha, String titulo_foro, String titulo_tema, String autor,
+	public Temas(int num_comentarios, int num_likes, LocalDate fecha, String titulo_foro, String titulo_tema, String autor,
 			String descripcion) {
 		super();
 		this.num_comentarios = num_comentarios;
@@ -44,12 +46,22 @@ public class Temas {
 	}
 
 
-	public String getFecha() {
+	
+
+	@Override
+	public String toString() {
+		return "Temas [num_comentarios=" + num_comentarios + ", num_likes=" + num_likes + ", fecha=" + fecha
+				+ ", titulo_foro=" + titulo_foro + ", titulo_tema=" + titulo_tema + ", autor=" + autor
+				+ ", descripcion=" + descripcion + "]";
+	}
+
+
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
 
-	public void setFecha(String fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 

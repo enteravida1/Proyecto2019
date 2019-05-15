@@ -9,8 +9,10 @@ package bbdd;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import exceptions.TecnicException;
+import modelos.Comentarios;
 import modelos.Comentarios;
 
 public class BD_Comentarios extends BD_Conector {
@@ -66,11 +68,32 @@ public class BD_Comentarios extends BD_Conector {
 			reg=s.executeQuery(cadenaSQL);
 			
 			if ( reg.next()){
-				ca=new Comentarios(reg.getString(1),reg.getString(2),orden,reg.getString(4),reg.getString(5),reg.getString(6),reg.getInt(7));
+				ca=new Comentarios(reg.getString(1),reg.getString(2),orden,reg.getString(4),reg.getDate(5).toLocalDate(),reg.getString(6),reg.getInt(7));
 			}			
 			s.close();
 			this.cerrar();
 			return ca;
+		}
+		catch ( SQLException e){
+		//	System.out.println(e.getMessage());
+			throw new TecnicException("En este momento no podemos atender su petición");
+			
+		}
+	}
+
+	public  Vector <Comentarios> MostrarComentarios(String tituloTema) throws TecnicException{
+		String cadenaSQL="SELECT * from comentarios WHERE TITULO_TEMA ='"+ tituloTema+ "'" ;
+		Vector <Comentarios> comentarios =new Vector <Comentarios>();
+		try{
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(cadenaSQL);
+			while ( reg.next()){
+				comentarios.add(new Comentarios(tituloTema,reg.getString("TITULO_FORO"),reg.getInt("ORDEN"),reg.getString("USER"),reg.getDate("FECHA").toLocalDate(),reg.getString("CONTENIDO"),reg.getInt("NUM_LIKES")));
+			}			
+			s.close();
+			this.cerrar();
+			return comentarios;
 		}
 		catch ( SQLException e){
 		//	System.out.println(e.getMessage());

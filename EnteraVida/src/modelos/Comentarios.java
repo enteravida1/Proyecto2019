@@ -1,6 +1,7 @@
 package modelos;
 
 import java.sql.Statement;
+import java.time.LocalDate;
 
 public class Comentarios {
 	
@@ -8,24 +9,25 @@ public class Comentarios {
 	private String tituloForo;
 	private int orden;
 	private String user;
-	private String fecha;
+	private LocalDate fecha;
 	private String contenido;
 	private int nlikes;
 	
 	
 	
-	public Comentarios(String tituloTema, String tituloForo, int orden, String user, String fecha, String contenido,
+	public Comentarios(String tituloTema, String tituloForo, int orden, String user, LocalDate fecha, String contenido,
 			int nlikes) {
 		super();
 		this.tituloTema = tituloTema;
 		this.tituloForo = tituloForo;
-		this.orden = orden;
+		this.orden = 0;
 		this.user = user;
 		this.fecha = fecha;
 		this.contenido = contenido;
 		this.nlikes = nlikes;
 	}
 
+	
 
 
 	public String getTituloTema() {
@@ -76,13 +78,16 @@ public class Comentarios {
 
 
 
-	public String getFecha() {
+	
+
+
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
 
 
-	public void setFecha(String fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
@@ -102,6 +107,14 @@ public class Comentarios {
 
 	public int getNlikes() {
 		return nlikes;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Comentarios [tituloTema=" + tituloTema + ", tituloForo=" + tituloForo + ", orden=" + orden + ", user="
+				+ user + ", fecha=" + fecha + ", contenido=" + contenido + ", nlikes=" + nlikes + "]";
 	}
 
 

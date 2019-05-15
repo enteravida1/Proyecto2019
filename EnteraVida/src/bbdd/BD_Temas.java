@@ -2,8 +2,10 @@ package bbdd;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import exceptions.TecnicException;
+import modelos.Temas;
 import modelos.Noticias;
 import modelos.Temas;
 import modelos.Usuarios;
@@ -44,7 +46,7 @@ import modelos.Usuarios;
 				s=c.createStatement();
 				reg=s.executeQuery(cadenaSQL);
 				if ( reg.next()){
-					t=new Temas(reg.getInt(1),reg.getInt(2),titulo_foro,reg.getString(4),reg.getString(5),reg.getString(6),reg.getString(7));
+					t=new Temas(reg.getInt(1),reg.getInt(2),reg.getDate(3).toLocalDate(),titulo_foro,reg.getString(5),reg.getString(6),reg.getString(7));
 				}			
 				s.close();
 				this.cerrar();
@@ -66,7 +68,7 @@ import modelos.Usuarios;
 				s=c.createStatement();
 				reg=s.executeQuery(cadenaSQL);
 				if ( reg.next()){
-					t=new Temas(reg.getInt(1),reg.getInt(2),titulo_tema,reg.getString(4),reg.getString(5),reg.getString(6),reg.getString(7));
+					t=new Temas(reg.getInt(1),reg.getInt(2),reg.getDate(3).toLocalDate(),titulo_tema,reg.getString(5),reg.getString(6),reg.getString(7));
 				}			
 				s.close();
 				this.cerrar();
@@ -78,4 +80,27 @@ import modelos.Usuarios;
 				
 			}
 		}
+		
+
+		public  Vector <Temas> MostrarTemas1(String titulo_foro) throws TecnicException{
+			String cadenaSQL="SELECT * from temas WHERE TITULO_FORO =' "+titulo_foro+ "'" ;
+			Vector <Temas> temas =new Vector <Temas>();
+			try{
+				this.abrir();
+				s=c.createStatement();
+				reg=s.executeQuery(cadenaSQL);
+				while ( reg.next()){
+					temas.add(new Temas(reg.getInt("NUM_COMENTARIOS"),reg.getInt("NUM_LIKES"),reg.getDate("FECHA").toLocalDate(),titulo_foro,reg.getString("TITULO_TEMA"),reg.getString("USER"),reg.getString("DESCRIPCION")));
+				}			
+				s.close();
+				this.cerrar();
+				return temas;
+			}
+			catch ( SQLException e){
+			//	System.out.println(e.getMessage());
+				throw new TecnicException("En este momento no podemos atender su petición");
+				
+			}
+		}
+		
 }

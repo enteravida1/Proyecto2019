@@ -13,9 +13,12 @@ import bbdd.BD_Temas;
 import bbdd.BD_Tipos;
 import bbdd.BD_Usuarios;
 import exceptions.TecnicException;
+import modelos.Comentarios;
+import modelos.Foros;
 import modelos.Guias;
 import modelos.Guias;
 import modelos.Noticias;
+import modelos.Temas;
 import modelos.Usuarios;
 
 public class main {
@@ -154,15 +157,10 @@ public class main {
 
 			case 2:
 
-				System.out.println("-------");
-				System.out.println(bdti.MostrarTipos());
-				System.out.println("-------");
-
-				System.out.println("Elige un tipo");
+				System.out.println("Elige un tipo : 1.General\n 2.Videojuegos\n 3.Tecnologia \4. Salir");
 				String eligeTipo = sLeer.nextLine();
 
-				bdti.BuscarTpos(eligeTipo);
-				bdf.MostrarForo();
+				System.out.println(bdti.BuscarTpos(eligeTipo).toString());
 
 				System.out.println("Indica un titulo al foro:\n");
 				String tituloF = sLeer.nextLine();
@@ -170,13 +168,12 @@ public class main {
 				System.out.println("Escribe una descripcion para el foro:\n");
 				String descF = sLeer.nextLine();
 
-				Guias f = new Guias(eligeTipo, user, tituloF, fechaActual, 0, descF);
+				Foros f = new Foros(eligeTipo, user, tituloF, fechaActual, 0, descF);
 
 				int filasf = bdf.CrearForo(f);
 				switch (filasf) {
 				case 1:
 					System.out.println("\nForo añadido");
-					break;
 				case 0:
 					System.out.println("\nForo NO añadido");
 					break;
@@ -186,6 +183,7 @@ public class main {
 					break;
 
 				}
+				System.out.println(bdf.BuscarForo(tituloF).toString());
 				break;
 
 			case 3:
@@ -202,16 +200,14 @@ public class main {
 				switch (filasn) {
 				case 1:
 					System.out.println("\nNoticia añadida");
-					break;
 				case 0:
 					System.out.println("\nNoticia NO añadido");
 					break;
 				case -1:
 					System.out.println("\nProblemas técnicos");
-
 					break;
-
 				}
+				System.out.println(bdn.BuscarNoticiaTitulo(tituloN).toString());
 				break;
 
 			case 4:
@@ -229,47 +225,128 @@ public class main {
 					switch (opc2) {
 					case 1:
 						try {
-							System.out.println(bdf.MostrarForo());
-							Vector<Guias> foros = bdf.MostrarForo();
+							Vector<Foros> foros = bdf.MostrarForo();
 							for (int i = 0; i < foros.size(); i++) {
-								System.out.println(foros.get(i));
+								System.out.println(
+										"Titulo del tipo donde se encuentra el foro: " + foros.get(i).getTituloTipo());
+								System.out.println("Autor del foro " + foros.get(i).getUser());
+								System.out.println("Titulo del foro " + foros.get(i).getTituloForo());
+								System.out.println("Fecha de creacion " + foros.get(i).getFecha());
+								System.out.println("Número de temas que contiene el foro " + foros.get(i).getNtemas());
+								System.out.println("Pequeña descripción " + foros.get(i).getDesc());
+								System.out.println("*******************");
 							}
 							System.out.println("Indica el foro que quieres buscar");
 							String foro = sLeer.nextLine();
-							System.out.println(bdf.BuscarForo(foro));
+							System.out.println(bdf.BuscarForo(foro).toString());
+
 						} catch (TecnicException e) {
 							System.out.println("Error tecnico");
+							break;
 
 						}
-						case2: try {
-							System.out.println(bdf.MostrarForo());
-							Vector<Guias> foros = bdf.MostrarForo();
+						break;
+					case 2:
+						try {
+							Vector<Foros> foros = bdf.MostrarForo();
 							for (int i = 0; i < foros.size(); i++) {
-								System.out.println(foros.get(i));
+								System.out.println(
+										"Titulo del tipo donde se encuentra el foro: " + foros.get(i).getTituloTipo());
+								System.out.println("Autor del foro " + foros.get(i).getUser());
+								System.out.println("Titulo del foro " + foros.get(i).getTituloForo());
+								System.out.println("Fecha de creacion " + foros.get(i).getFecha());
+								System.out.println("Número de temas que contiene el foro " + foros.get(i).getNtemas());
+								System.out.println("Pequeña descripción " + foros.get(i).getDesc());
 							}
+
 							System.out.println("Indica el foro que quieres buscar");
 							String foro = sLeer.nextLine();
-							System.out.println(bdf.BuscarForo(foro));
+
+							Vector<Temas> temas = bdte.MostrarTemas1(foro);
+							for (int i = 0; i < temas.size(); i++) {
+								System.out.println(
+										"Titulo del foro donde se encuentra el foro: " + temas.get(i).getTitulo_foro());
+								System.out.println("Autor del tema " + temas.get(i).getAutor());
+								System.out.println("Titulo del tema " + temas.get(i).getTitulo_tema());
+								System.out.println("Fecha de creacion " + temas.get(i).getFecha());
+								System.out.println("Número de cometnarios que contiene el tema "
+										+ temas.get(i).getNum_comentarios());
+								System.out.println("Número de likes " + temas.get(i).getNum_likes());
+								System.out.println("Contenido del tema " + temas.get(i).getDescripcion());
+								System.out.println("*******************");
+								Vector<Comentarios> comentarios = bdc.MostrarComentarios(temas.get(i).getTitulo_tema());
+
+								for (int j = 0; j < comentarios.size(); j++) {
+									System.out.println(
+											"orden del comentario en el tema: " + comentarios.get(j).getOrden());
+									System.out.println("fecha de creacion " + comentarios.get(j).getFecha());
+									System.out.println("usuario creador: " + comentarios.get(j).getUser());
+									System.out.println("contenido del comentario " + comentarios.get(j).getContenido());
+									System.out.println("numero de likes: " + comentarios.get(j).getNlikes());
+									System.out.println("********************");
+									System.out.println("********************");
+
+								}
+
+								System.out.println(
+										"Quieres hacer un comentario al tema? pon S si quieres y N si no quieres");
+								char opcion = sLeer.nextLine().charAt(0);
+
+								if (opcion == 'S') {
+
+									System.out.println("Escribe el comentario");
+									String coment = sLeer.nextLine();
+									Comentarios ca = new Comentarios(temas.get(i).getTitulo_tema(), foro, 0, user,
+											fechaActual, coment, 0);
+
+									int filasc = bdc.CrearComentario(ca);
+									switch (filasc) {
+									case 1:
+										System.out.println("\nGuia añadido");
+										break;
+									case 0:
+										System.out.println("\nGuia NO añadida");
+										break;
+									case -1:
+										System.out.println("\nProblemas técnicos");
+
+										break;
+
+									}
+
+								}
+								if (opcion == 'N') {
+									System.out.println("no se ha hecho el comentario");
+									break;
+								}
+								if (opcion != 'S' || opcion != 'N') {
+									System.out.println("Error Tecnico");
+									break;
+								}
+
+							}
+
 						} catch (TecnicException e) {
 							System.out.println("Error tecnico");
-
+							break;
 						}
+						break;
 					case 3:
 						try {
 							Vector<Guias> guias = bdg.MostrarGuias2();
 							for (int i = 0; i < guias.size(); i++) {
 								System.out.println("Titulo: " + guias.get(i).getTitulo());
 								System.out.println("*****************");
-								System.out.println("autor:"+ guias.get(i).getAutor());
-								System.out.println("fecha :" +guias.get(i).getFecha());
-								System.out.println("desarrollador: "+ guias.get(i).getDesarrollador());
+								System.out.println("autor:" + guias.get(i).getAutor());
+								System.out.println("fecha :" + guias.get(i).getFecha());
+								System.out.println("desarrollador: " + guias.get(i).getDesarrollador());
 								System.out.println("numero de Likes " + guias.get(i).getNum_likes());
 								System.out.println("plataforma del juego: " + guias.get(i).getPlataforma());
 								System.out.println("*******************");
 								System.out.println(guias.get(i).getDescripcion());
-								
+
 							}
-							System.out.println("Indica el titulo de la guiaque quieres buscar");
+							System.out.println("Indica el titulo de la guia que quieres buscar");
 							String foro = sLeer.nextLine();
 							System.out.println(bdf.BuscarForo(foro).toString());
 						} catch (TecnicException e) {
