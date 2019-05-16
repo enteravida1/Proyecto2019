@@ -13,6 +13,7 @@ import java.util.Vector;
 
 import exceptions.TecnicException;
 import modelos.Comentarios;
+import modelos.Usuarios;
 import modelos.Comentarios;
 
 public class BD_Comentarios extends BD_Conector {
@@ -51,6 +52,7 @@ public class BD_Comentarios extends BD_Conector {
 			}
 		
 	}
+	
 	
 	/**
 	 * Metodo que busca un comentario por el orden en el que se ha escrito,
@@ -111,12 +113,13 @@ public class BD_Comentarios extends BD_Conector {
 	 * @return filas: el número de filas que se han eliminado.
 	 */
 	
-	public int  EliminarComentario(Comentarios ca)  throws TecnicException{
-		String cadenaSQL=" DELETE  from usuarios WHERE ORDEN ='" +ca.getOrden()+"'";
+	public int EliminarComentario(String user)  throws TecnicException{
+		String cadenaSQL=" DELETE  from usuarios WHERE USER ='" +user+"'";
 		try{
 			this.abrir();
 			s=c.createStatement();
-			int filas=s.executeUpdate(cadenaSQL);	
+			reg=s.executeQuery(cadenaSQL);
+			int filas=s.executeUpdate(cadenaSQL);				
 			s.close();
 			this.cerrar();
 			return filas;
@@ -124,8 +127,8 @@ public class BD_Comentarios extends BD_Conector {
 			}
 			catch ( SQLException e){
 				this.cerrar();
-				return -1;
 			}
+		return -1;
 		
 	}
 	

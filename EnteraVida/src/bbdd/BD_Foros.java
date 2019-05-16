@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import exceptions.TecnicException;
 import modelos.Foros;
+import modelos.Temas;
 import modelos.Usuarios;
 
 public class BD_Foros extends BD_Conector {
@@ -38,19 +39,19 @@ public class BD_Foros extends BD_Conector {
 	
 	
 	
-	public  Foros BuscarForo(String tituloForo) throws TecnicException{
-		String cadenaSQL="SELECT * from foros WHERE TITULO-FORO ='"+tituloForo+"'" ;
-		Foros f=null;
+	public  Vector <Foros>  BuscarForo(String tituloForo) throws TecnicException{
+		String cadenaSQL="SELECT * FROM foros WHERE \"TITULO-FORO\"='"+tituloForo+"'";
+		Vector <Foros> foros =new Vector <Foros>();
 		try{
 			this.abrir();
 			s=c.createStatement();
 			reg=s.executeQuery(cadenaSQL);
 			if ( reg.next()){
-				f= new Foros(reg.getString("TITULO_TIPO"),reg.getString("USER"),tituloForo,reg.getDate("FECHA").toLocalDate(),reg.getInt("NUM_TEMAS"),reg.getString("DESCRIPCION"));
+				foros.add( new Foros(reg.getString("TITULO_TIPO"),reg.getString("USER"),tituloForo,reg.getDate("FECHA").toLocalDate(),reg.getInt("NUM_TEMAS"),reg.getString("DESCRIPCION")));
 			}			
 			s.close();
 			this.cerrar();
-			return f;
+			return foros;
 		}
 		catch ( SQLException e){
 		//	System.out.println(e.getMessage());
