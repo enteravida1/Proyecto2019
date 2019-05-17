@@ -98,6 +98,7 @@ public class BD_Comentarios extends BD_Conector {
 			this.cerrar();
 			return comentarios;
 		}
+		
 		catch ( SQLException e){
 		//	System.out.println(e.getMessage());
 			throw new TecnicException("En este momento no podemos atender su petición");

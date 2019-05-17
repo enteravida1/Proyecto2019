@@ -1,4 +1,10 @@
 package bbdd;
+/*
+ * 
+ * @author Mario Martin
+ * editado por: 
+ * @author Raul Alonso
+ */
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

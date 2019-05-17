@@ -1,6 +1,9 @@
 /*
  * BD_Usuarios: Operaciones de añadir,buscar y eliminar usuarios de la base de datos.
+
  * @author Raul_Alonso_Ollero
+ * @author Mario Martin
+ * @author Abel Encinas
  */
 package bbdd;
 

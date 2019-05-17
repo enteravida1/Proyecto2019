@@ -1,4 +1,9 @@
 package bbdd;
+/*
+@author Abel Encinas
+* editado por: 
+* @author Raul Alonso
+*/
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,7 +44,7 @@ import modelos.Usuarios;
 		}
 		
 		public  Temas BuscarTemaTitF(String titulo_foro) throws TecnicException{
-			String cadenaSQL="SELECT * from noticias WHERE TITULO_FORO =' "+titulo_foro+ "'" ;
+			String cadenaSQL="SELECT * from temas WHERE TITULO_FORO ='"+titulo_foro+ "'" ;
 			Temas t=null;
 			try{
 				this.abrir();
@@ -61,7 +66,7 @@ import modelos.Usuarios;
 		
 		
 		public  Temas BuscarTemaTitT(String titulo_tema) throws TecnicException{
-			String cadenaSQL="SELECT * from noticias WHERE TITULO_TEMA =' "+titulo_tema+ "'" ;
+			String cadenaSQL="SELECT * from temas WHERE TITULO_TEMA ='"+titulo_tema+ "'" ;
 			Temas t=null;
 			try{
 				this.abrir();

@@ -31,6 +31,11 @@ public class Foros {
 	public void setUser(String user) {
 		this.user = user;
 	}
+	@Override
+	public String toString() {
+		return "Foros [tituloTipo=" + tituloTipo + ", user=" + user + ", tituloForo=" + tituloForo + ", fecha=" + fecha
+				+ ", ntemas=" + ntemas + ", desc=" + desc + "]";
+	}
 	public String getTituloForo() {
 		return tituloForo;
 	}

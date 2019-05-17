@@ -1,4 +1,8 @@
 package bbdd;
+/*
+
+* @author Raul Alonso
+*/
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

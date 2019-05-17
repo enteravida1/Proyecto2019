@@ -1,4 +1,9 @@
 package bbdd;
+/*
+@author Mario Martin
+* editado por: 
+* @author Raul Alonso
+*/
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +27,7 @@ public class BD_Foros extends BD_Conector {
 	}
 	public int CrearForo(Foros f) throws TecnicException{
 		String cadenaSQL="INSERT INTO foros VALUES('" + f.getTituloTipo() + "','" +
-				f.getUser()+ "','" + f.getTituloForo()  + "','" + f.getFecha() + "','" + f.getNtemas()+ "','" + f.getDesc()+ "')"; 
+				f.getUser()+ "','"  + f.getFecha() + "','" + f.getNtemas()+ "','" + f.getDesc()+"','" + f.getTituloForo()  + "')"; 
 		try{
 			this.abrir();
 			s=c.createStatement();
@@ -38,27 +43,27 @@ public class BD_Foros extends BD_Conector {
 	}
 	
 	
-	
-	public  Vector <Foros>  BuscarForo(String tituloForo) throws TecnicException{
-		String cadenaSQL="SELECT * FROM foros WHERE \"TITULO-FORO\"='"+tituloForo+"'";
-		Vector <Foros> foros =new Vector <Foros>();
+	public  Foros BuscarForos(String titulo_foro) throws TecnicException{
+		String cadenaSQL="SELECT * from foros WHERE TITULO_FORO ='"+titulo_foro+ "'" ;
+		Foros f=null;
 		try{
 			this.abrir();
 			s=c.createStatement();
 			reg=s.executeQuery(cadenaSQL);
 			if ( reg.next()){
-				foros.add( new Foros(reg.getString("TITULO_TIPO"),reg.getString("USER"),tituloForo,reg.getDate("FECHA").toLocalDate(),reg.getInt("NUM_TEMAS"),reg.getString("DESCRIPCION")));
+				f=new Foros(reg.getString("TITULO_TIPO"),reg.getString("USER"),reg.getString("TITULO_FORO"),reg.getDate("FECHA").toLocalDate(),reg.getInt("NUM_TEMAS"),reg.getString("DESCRIPCION"));
 			}			
 			s.close();
 			this.cerrar();
-			return foros;
+			return f;
 		}
 		catch ( SQLException e){
 		//	System.out.println(e.getMessage());
-			throw new TecnicException("En este momento no podemos atender su petición");
+			throw new TecnicException("En este momento no podemos atender su peticiï¿½n");
 			
 		}
 	}
+	//Foros(reg.getString("TITULO_TIPO"),reg.getString("USER"),reg.getString("TITULO_FORO"),reg.getDate("FECHA").toLocalDate(),reg.getInt("NUM_TEMAS"),reg.getString("DESCRIPCION")));
 
 	
 	public  Vector <Foros> MostrarForo() throws TecnicException{
@@ -69,7 +74,7 @@ public class BD_Foros extends BD_Conector {
 			s=c.createStatement();
 			reg=s.executeQuery(cadenaSQL);
 			while ( reg.next()){
-				foro.add(new Foros(reg.getString("TITULO_TIPO"),reg.getString("USER"),reg.getString("TITULO-FORO"),reg.getDate("FECHA").toLocalDate(),reg.getInt("NUM_TEMAS"),reg.getString("DESCRIPCION")));
+				foro.add(new Foros(reg.getString("TITULO_TIPO"),reg.getString("USER"),reg.getString("TITULO_FORO"),reg.getDate("FECHA").toLocalDate(),reg.getInt("NUM_TEMAS"),reg.getString("DESCRIPCION")));
 			}			
 			s.close();
 			this.cerrar();
