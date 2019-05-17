@@ -131,7 +131,7 @@ public class main {
 	private static void menuAdministrador(String user) throws TecnicException {
 		Scanner sLeer = new Scanner(System.in);
 		int opc = 0;
-
+		int sum=1;
 		LocalDate fechaActual = LocalDate.now();
 
 		BD_Conector.BD_Ini("enteravida");
@@ -328,17 +328,12 @@ public class main {
 								System.out.println("Contenido del tema " + temas.get(i).getDescripcion());
 								System.out.println("*******************");
 
-								/*
-								
-								
-								
-								*/
-
 							}
 							System.out.println("Indica el titulo del tema que quieras buscar");
 							String tem = sLeer.nextLine();
 
 							Vector<Comentarios> comentarios = bdc.MostrarComentarios(tem);
+							if(comentarios!=null) {
 
 							for (int j = 0; j < comentarios.size(); j++) {
 								System.out.println("orden del comentario en el tema: " + comentarios.get(j).getOrden());
@@ -356,7 +351,8 @@ public class main {
 
 									System.out.println("Escribe el comentario");
 									String coment = sLeer.nextLine();
-									Comentarios ca = new Comentarios(tem, foro, 1, user, fechaActual, coment, 1);
+									sum++;
+									Comentarios ca = new Comentarios(tem, foro, sum, user, fechaActual, coment, 1);
 
 									int filasc = bdc.CrearComentario(ca);
 									switch (filasc) {
@@ -370,7 +366,6 @@ public class main {
 										System.out.println("\nProblemas técnicos");
 
 										break;
-
 									}
 
 								}
@@ -382,8 +377,11 @@ public class main {
 									System.out.println("Error Tecnico");
 									break;
 								}
+								break;
 							}
-
+							break;
+							}
+							
 							System.out.println(
 									"Este tema no tiene comentarios,¿quieres hacer un comentario al tema? pon S si quieres y N si no quieres");
 							char opcion = sLeer.nextLine().charAt(0);
@@ -424,6 +422,7 @@ public class main {
 							break;
 						}
 						break;
+						
 					case 3:
 						try {
 							Vector<Guias> guias = bdg.MostrarGuias2();
